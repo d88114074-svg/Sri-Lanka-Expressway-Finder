@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b5ed7">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b5ed7" />
+  <title>Sri Lanka Expressway Finder & Toll Calculator</title>
+
+  <style>
+    :root {
+      --primary:#0b5ed7;
+      --primary-dark:#084298;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#667085;
+      --border:#d9e1ec;
+      --success:#198754;
+      --warning:#fff3cd;
+      --warning-border:#ffe69c;
+      --danger:#dc3545;
+      --shadow:0 5px 18px rgba(20,40,80,.08);
+    }
+
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+  /* Toll Result Popup */
+.toll-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.toll-modal.show {
+  display: flex;
+}
+
+.toll-modal-card {
+  width: 100%;
+  max-width: 430px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.30);
+  position: relative;
+}
+
+.toll-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f3f5;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.toll-modal-close:hover {
+  background: #e9ecef;
+}
+/* Nearest Exit Popup */
+.nearest-exit-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9998;
+}
+
+.nearest-exit-modal.show {
+  display: flex;
+}
+
+.nearest-exit-modal-card {
+  width: 100%;
+  max-width: 430px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.30);
+  position: relative;
+}
+
+.nearest-exit-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f3f5;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+    .app {
+      max-width:760px;
+      margin:auto;
+      min-height:100vh;
+    }
+
+    .header-logo {
+      width:100px;
+      height:100px;
+      object-fit:contain;
+      vertical-align:middle;
+      margin-right:7px;
+      border-radius:8px;
+    }
+
+    header {
+      background:linear-gradient(135deg,var(--primary),#083b9a);
+      color:#fff;
+      padding:22px 18px 24px;
+      border-radius:0 0 22px 22px;
+	  text-align:center;
+    }
+
+    header h1 {
+      margin:0 0 6px;
+      font-size:40px;
+      line-height:1.15;
+	  
+    }
+
+    header p {
+      margin:0;
+      opacity:.9;
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    main { padding:16px; }
+
+    .screen { display:none; }
+    .screen.active { display:block; }
+
+    .card {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      margin-bottom:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .menu-grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    button, select, input { font:inherit; }
+
+    button {
+      border:0;
+      cursor:pointer;
+    }
+
+    .menu-btn {
+      width:100%;
+      text-align:center;
+      background:linear-gradient(135deg,#eef6ff,#dcecff);
+      border:1px solid #b9d3f5;
+      border-radius:16px;
+      padding:17px;
+      box-shadow:0 5px 18px rgba(11,94,215,.12);
+    }
+
+    .menu-btn:active { transform:scale(.99); }
+
+    .menu-title {
+      font-weight:700;
+      font-size:25px;
+      margin-bottom:5px;
+    }
+
+    .menu-desc {
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .icon {
+      display:inline-flex;
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      align-items:center;
+      justify-content:center;
+      background:#e8f0ff;
+      margin-bottom:9px;
+      font-size:20px;
+    }
+
+    .icon img {
+      width:35px;
+      height:35px;
+      object-fit:contain;
+      display:block;
+    }
+
+    label {
+      display:block;
+      font-weight:700;
+      font-size:14px;
+      margin:0 0 7px;
+    }
+
+    select, input {
+      width:100%;
+      padding:13px 12px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+
+    select:focus, input:focus {
+      border-color:var(--primary);
+    }
+
+    .row {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .primary {
+      background:var(--primary);
+      color:#fff;
+      padding:13px 16px;
+      border-radius:11px;
+      font-weight:700;
+      width:100%;
+      margin-top:12px;
+    }
+
+    .secondary {
+      background:#eef3f9;
+      color:#243247;
+      padding:11px 14px;
+      border-radius:10px;
+      font-weight:700;
+    }
+
+    .back {
+      background:#ffffff;
+      color:var(--primary);
+      font-weight:700;
+      font-size:30px;
+      padding:10px 18px;
+      border-radius:10px;
+      box-shadow:0 3px 10px rgba(0,0,0,.15);
+      z-index:1000;
+      margin-bottom:14px;
+    }
+
+    .result {
+      border:1px solid var(--border);
+      border-radius:13px;
+      padding:14px;
+      margin-top:10px;
+      background:#fff;
+    }
+.category-note {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.category-note-title {
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+/* Category 1 notice */
+.category-note.category-1 {
+  background: #d1e7dd;
+  color: #0f5132;
+  border: 2px solid #75b798;
+}
+
+/* Category 2 notice */
+.category-note.category-2 {
+  background: #fff3cd;
+  color: #664d03;
+  border: 2px solid #ffda6a;
+}
+
+/* Category 3 notice */
+.category-note.category-3 {
+  background: #f8d7da;
+  color: #842029;
+  border: 2px solid #f1aeb5;
+}
+    .result h3 {
+      margin:0 0 5px;
+      font-size:17px;
+    }
+
+    .small {
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .distance {
+      font-weight:700;
+      color:var(--success);
+      margin-top:7px;
+    }
+
+    .actions {
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+
+    .actions a {
+      text-decoration:none;
+      display:inline-block;
+      background:#eef3f9;
+      color:#17345f;
+      padding:9px 11px;
+      border-radius:9px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .badge {
+      display:inline-block;
+      background:#e8f0ff;
+      color:#084298;
+      padding:4px 8px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:700;
+      margin-bottom:7px;
+    }
+
+    .notice {
+      background:var(--warning);
+      border:1px solid var(--warning-border);
+      border-radius:12px;
+      padding:12px;
+      font-size:12px;
+      line-height:1.5;
+      margin-top:14px;
+    }
+
+    .special-note {
+      background:#fff3cd;
+      border:2px solid #ffda6a;
+      border-radius:12px;
+      padding:12px;
+      margin-top:12px;
+      font-size:20px;
+      line-height:1.5;
+      color:#664d03;
+    }
+
+    .special-note-title {
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    .category-note {
+      background:#eef6ff;
+      border:1px solid #b9d3f5;
+      border-radius:12px;
+      padding:12px;
+      margin-top:10px;
+      font-size:14px;
+      line-height:1.5;
+      color:#17345f;
+    }
+
+    .category-note-title {
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    /* Vehicle category buttons */
+    .vehicle-category-buttons {
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .vehicle-category-btn {
+      min-height:95px;
+      border-radius:16px;
+      padding:12px 6px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      cursor:pointer;
+      font-weight:700;
+      border:3px solid transparent;
+      transition:.15s ease;
+    }
+
+    .vehicle-category-btn:active {
+      transform:scale(.96);
+    }
+
+    .category-number {
+      font-size:30px;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .category-name {
+      font-size:14px;
+    }
+
+    .vehicle-category-btn.category-1 {
+      background:#d1e7dd;
+      color:#0f5132;
+      border-color:#75b798;
+    }
+
+    .vehicle-category-btn.category-2 {
+      background:#fff3cd;
+      color:#664d03;
+      border-color:#ffda6a;
+    }
+
+    .vehicle-category-btn.category-3 {
+      background:#f8d7da;
+      color:#842029;
+      border-color:#f1aeb5;
+    }
+
+    .vehicle-category-btn.selected {
+      box-shadow:0 0 0 4px rgba(11,94,215,.20);
+      transform:translateY(-2px);
+    }
+
+    @media(max-width:380px) {
+      .vehicle-category-btn {
+        min-height:88px;
+        padding:10px 3px;
+      }
+
+      .category-number {
+        font-size:26px;
+      }
+
+      .category-name {
+        font-size:12px;
+      }
+    }
+
+    .toll-result {
+      text-align:center;
+      background:#e8f7ef;
+      border:2px solid #a3cfbb;
+      border-radius:14px;
+      padding:18px;
+      margin-top:14px;
+    }
+
+    .toll-result .amount {
+      font-size:34px;
+      font-weight:800;
+      color:var(--success);
+      margin:7px 0;
+    }
+
+    .error {
+      color:#842029;
+      background:#f8d7da;
+      border:1px solid #f1aeb5;
+      border-radius:10px;
+      padding:10px;
+      font-size:13px;
+      margin-top:10px;
+    }
+
+    .success {
+      color:#0f5132;
+      background:#d1e7dd;
+      border:1px solid #a3cfbb;
+      border-radius:10px;
+      padding:10px;
+      font-size:13px;
+      margin-top:10px;
+    }
+
+    .footer {
+      text-align:center;
+      color:var(--muted);
+      font-size:11px;
+      padding:10px 0 25px;
+    }
+
+    .language {
+      margin-top:12px;
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .language select {
+      width:auto;
+      min-width:110px;
+      padding:8px;
+    }
+
+    #citySuggestions {
+      margin-top:5px;
+      max-height:250px;
+      overflow-y:auto;
+    }
+
+    .city-suggestion {
+      padding:13px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:8px;
+      margin-bottom:5px;
+      cursor:pointer;
+      font-size:16px;
+    }
+
+    @media(min-width:620px) {
+      .menu-grid {
+        grid-template-columns:1fr 1fr;
+      }
+
+      .row.two {
+        grid-template-columns:1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+
+  <header>
+    <h1 id="appTitle">
+    
+     Sri Lanka Expressway Finder & Toll Calculator
+    </h1>
+
+    <p id="appSubtitle">
+      Find cities near an expressway exit, find the nearest exit to a city, use GPS, or calculate toll charges.
+    </p>
+
+    <div class="language">
+      <select id="languageSelect" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="si">සිංහල</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="home" class="screen active">
+
+    <div class="menu-grid">
+
+  <!-- 1. TOLL CHARGE -->
+  <button class="menu-btn" onclick="showScreen('tollScreen')">
+    <div class="icon">💰</div>
+
+    <div class="menu-title" id="tollTitle">
+      Toll Charges
+    </div>
+
+    <div class="menu-desc" id="tollDesc">
+      Select entrance, exit and vehicle category to calculate the toll charge.
+    </div>
+  </button>
+
+
+  <!-- 2. CITY → NEAREST EXIT -->
+  <button class="menu-btn" onclick="showScreen('cityScreen')">
+    <div class="icon">🏙️</div>
+
+    <div class="menu-title" id="cityToExitTitle">
+      City → Nearest Exit
+    </div>
+
+    <div class="menu-desc" id="cityToExitDesc">
+      Select a city and find the nearest exit.
+    </div>
+  </button>
+
+
+  <!-- 3. EXIT → NEARBY CITIES -->
+  <button class="menu-btn" onclick="showScreen('exitScreen')">
+    <div class="icon">
+      
+    </div>
+
+    <div class="menu-title" id="exitToCityTitle">
+      Interchange → Nearby Cities
+    </div>
+
+    <div class="menu-desc" id="exitToCityDesc">
+      Select an expressway interchange and see nearby cities/towns.
+    </div>
+  </button>
+
+
+  <!-- 4. GPS → NEAREST EXIT -->
+  <button class="menu-btn" onclick="findNearestByGPS()">
+    <div class="icon">📍</div>
+
+    <div class="menu-title" id="gpsTitle">
+      GPS → Nearest Exit
+    </div>
+
+    <div class="menu-desc" id="gpsDesc">
+      Use your phone location to calculate the nearest exit.
+    </div>
+  </button>
+
+</div>
+
+
+      <div id="gpsHomeResult"></div>
+
+      <div class="notice">
+        <strong style="font-size:28px;"> In Emergancy Call -1969</strong>
+        
+        <br>Notice : Distances shown here are straight-line estimates, not driving distances.
+      </div>
+
+    </section>
+
+
+    <!-- EXIT → CITIES -->
+    <section id="exitScreen" class="screen">
+
+      <button class="back" onclick="showScreen('home')">
+        ← <span id="back1">Back</span>
+      </button>
+
+      <div class="card">
+
+        <h2 id="exitScreenTitle">
+          Find cities near an exit
+        </h2>
+
+        <div class="row">
+
+          <div>
+            <label for="expresswaySelect" id="expresswayLabel">
+              Expressway
+            </label>
+
+            <select id="expresswaySelect" onchange="populateExitSelect()"></select>
+          </div>
+
+          <div>
+            <label for="exitSelect" id="exitLabel">
+              Exit
+            </label>
+
+            <select id="exitSelect"></select>
+          </div>
+
+        </div>
+
+        <label for="cityRadius" style="margin-top:12px;" id="radiusLabel">
+          Maximum distance
+        </label>
+
+        <select id="cityRadius">
+          <option value="10" selected>10 km</option>
+          <option value="25">25 km</option>
+          <option value="50">50 km</option>
+          <option value="100">100 km</option>
+        </select>
+
+        <button class="primary" onclick="findCitiesFromExit()" id="findCitiesBtn">
+          Find Nearby Cities
+        </button>
+
+      </div>
+
+      <div id="exitResults"></div>
+
+    </section>
+
+
+    <!-- CITY → EXIT -->
+    <section id="cityScreen" class="screen">
+
+      <button class="back" onclick="showScreen('home')">
+        ← <span id="back2">Back</span>
+      </button>
+
+      <div class="card">
+
+        <h2 id="cityScreenTitle">
+          Find the nearest exit to a city
+        </h2>
+
+        <label for="citySearch" id="cityLabel">
+          City / Town
+        </label>
+
+        <input
+          type="text"
+          id="citySearch"
+          placeholder="Search city or town..."
+          autocomplete="off"
+          oninput="searchCities()"
+        />
+
+        <div id="citySuggestions"></div>
+
+        <button
+          class="primary"
+          onclick="findExitsFromCity()"
+          id="findExitBtn"
+        >
+          Find Nearest Exit
+        </button>
+
+      </div>
+
+      <div id="cityResults"></div>
+
+    </section>
+
+
+    <!-- GPS -->
+    <section id="gpsScreen" class="screen">
+
+      <button class="back" onclick="showScreen('home')">
+        ← <span id="back3">Back</span>
+      </button>
+
+      <div class="card">
+
+        <h2 id="gpsScreenTitle">
+          Nearest exit using GPS
+        </h2>
+
+        <p class="small" id="gpsExplain">
+          Your browser will ask for location permission.
+          Your location is processed only in this page.
+        </p>
+
+        <button
+          class="primary"
+          onclick="findNearestByGPS(true)"
+          id="gpsButton"
+        >
+          📍 Find My Nearest Exit
+        </button>
+
+        <div id="gpsResult"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NEW TOLL CALCULATOR -->
+    <section id="tollScreen" class="screen">
+
+      <button class="back" onclick="showScreen('home')">
+        ← <span id="back4">Back</span>
+      </button>
+
+      <div class="card">
+
+        <h2 id="tollScreenTitle">
+          Expressway Toll Calculator
+        </h2>
+
+        <div class="notice" style="margin-top:0;">
+          <strong id="tollInstructionTitle">How to use:</strong>
+          <span id="tollInstruction">
+            Select the IC where you enter, the IC where you exit, and your vehicle category.
+          </span>
+        </div>
+
+        <div style="margin-top:14px;">
+          <label for="tollEntrance" id="tollEntranceLabel">
+            Entrance IC
+          </label>
+
+          <select id="tollEntrance" onchange="updateTollExitOptions()">
+          </select>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label for="tollExit" id="tollExitLabel">
+            Exit IC
+          </label>
+
+          <select id="tollExit">
+          </select>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label for="vehicleCategory" id="vehicleCategoryLabel">
+            Vehicle Category
+          </label>
+
+          <div class="vehicle-category-buttons">
+
+            <button
+              type="button"
+              class="vehicle-category-btn category-1"
+              onclick="selectVehicleCategory('1')"
+              id="categoryBtn1"
+            >
+              <span class="category-number">1</span>
+              <span class="category-name">Category 1</span>
+            </button>
+
+            <button
+              type="button"
+              class="vehicle-category-btn category-2"
+              onclick="selectVehicleCategory('2')"
+              id="categoryBtn2"
+            >
+              <span class="category-number">2</span>
+              <span class="category-name">Category 2</span>
+            </button>
+
+            <button
+              type="button"
+              class="vehicle-category-btn category-3"
+              onclick="selectVehicleCategory('3')"
+              id="categoryBtn3"
+            >
+              <span class="category-number">3</span>
+              <span class="category-name">Category 3</span>
+            </button>
+
+          </div>
+
+          <input type="hidden" id="vehicleCategory" value="1">
+
+          <div id="vehicleCategoryNotice"></div>
+        </div>
+
+        <button class="primary" onclick="calculateToll()" id="calculateTollBtn">
+          Calculate Toll Charge
+        </button>
+
+      </div>
+
+      <div id="tollResults"></div>
+
+    </section>
+
+
+    <div class="footer">
+      Sri Lanka Expressway Finder & Toll Calculator — first prototype
+    </div>
+
+  </main>
+</div>
+
+
+<script>
+
+/*
+============================================================
+EDITABLE EXPRESSWAY DATA
+============================================================
+*/
+
+const expressways = [
+
+  {
+    id: "E01",
+    name: "E01 Southern Expressway",
+
+    exits: [
+
+      { id:"e01-kottawa", name:"Kottawa IC", lat:6.840924, lon:79.980372 },
+
+      { id:"e01-kahathuduwa", name:"Kahathuduwa IC", lat:6.784504, lon:79.980489 },
+
+      { id:"e01-gelanigama", name:"Gelanigama IC", lat:6.718072, lon:80.000064 },
+
+      { id:"e01-dodangoda", name:"Dodangoda IC", lat:6.541871, lon:80.043821 },
+
+      { id:"e01-welipenna", name:"Welipenna IC", lat:6.453046, lon:80.089288 },
+
+      { id:"e01-kurundugaha", name:"Kurundugahahetekma IC", lat:6.271315, lon:80.138854 },
+
+      { id:"e01-baddegama", name:"Baddegama IC", lat:6.18669, lon:80.193598 },
+
+      { id:"e01-pinnaduwa", name:"Pinnaduwa IC", lat:6.066178, lon:80.262507 },
+	 
+	 { id:"e01-imaduwa", name:"Imaduwa IC", lat:6.034871, lon:80.363525 },
+
+      { id:"e01-kokmaduwa", name:"Kokmaduwa IC", lat:6.024364, lon:80.431437 },
+
+      { id:"e01-godagama", name:"Godagama IC", lat:5.976156, lon:80.518402 },
+
+      { id:"e01-kapuduwa", name:"Kapuduwa IC", lat:5.9916, lon:80.6175 },
+	  
+	  { id:"e01-palatuwa", name:"Palatuwa IC", lat:5.976156, lon:80.518402 },
+
+      { id:"e01-aparekka", name:"Aparekka IC", lat:6.010818, lon:80.605587 },
+
+      { id:"e01-beliatta", name:"Beliatta IC", lat:6.060191, lon:80.732040 },
+
+      { id:"e01-bedigama", name:"Bedigama IC", lat:6.100370, lon:80.782096 },
+
+      { id:"e01-kasagala", name:"Kasagala IC", lat:6.129796, lon:80.818908 },
+
+      { id:"e01-agunukolapelessa", name:"Agunukolapelessa IC", lat:6.187121, lon:80.876781 },
+
+      { id:"e01-barawakumbuka", name:"Barawakumbuka IC", lat:6.270877, lon:81.007996 },
+
+      { id:"e01-sooriyawewa", name:"Sooriyawewa IC", lat:6.2700, lon:80.9800 },
+
+      { id:"e01-mattala", name:"Mattala IC", lat:6.285676, lon:81.076129 },
+
+      { id:"e01-hambantota", name:"Magampura IC", lat:6.160862, lon:81.094846 }
+
+    ]
+  },
+
+  {
+    id: "E02",
+    name: "E02 Outer Circular Expressway",
+
+    exits: [
+
+      { id:"e02-kottawa", name:"Kottawa IC", lat:6.840924, lon:79.980372 },
+
+      { id:"e02-Athurugiriya", name:"Athurugiriya IC", lat:6.883985, lon:79.975960 },
+
+      { id:"e02-kothalawala", name:"Kothalawala IC", lat:6.92425, lon:79.97834 },
+
+      {
+        id:"e02-kaduwela",
+        name:"Kaduwela IC",
+        lat:6.937639,
+        lon:79.971784
+      },
+
+      { id:"e02-kadawatha", name:"Kadawatha IC", lat:7.002470, lon:79.960403 },
+
+      { id:"e02-kerawalapitiya", name:"Kerawalapitiya IC", lat:7.017507, lon:79.8887969 }
+
+    ]
+  },
+
+  {
+    id: "E03",
+    name: "E03 Colombo–Katunayake Expressway",
+
+    exits: [
+
+      { id:"e03-peliyagoda", name:"Peliyagoda IC", lat:6.968251, lon:79.893766 },
+
+      { id:"e03-katana", name:"Ja-Ela IC", lat:7.081490, lon:79.877060 },
+
+      { id:"e03-negombo", name:"Katunayake IC", lat:7.156352, lon:79.871316 }
+
+    ]
+  },
+
+  {
+    id: "E04",
+    name: "E04 Central Expressway Phase 2",
+
+    exits: [
+
+      { id:"e04-yaggapitiya", name:"Yaggapitiya IC", lat:7.497283, lon:80.383385 },
+
+      { id:"e04-kurunegala", name:"Kurunegala IC", lat:7.476145, lon:80.378131 },
+
+      { id:"e04-dambokka", name:"Dambokka IC", lat:7.445611, lon:80.341129 },
+
+      { id:"e04-nakalagamuwa", name:"Nakalagamuwa IC", lat:7.388679, lon:80.220408 },
+
+      { id:"e04-meerigama", name:"Meerigama North IC", lat:7.2600625, lon:80.1354375 }
+
+    ]
+  }
+
+];
+
+
+/*
+============================================================
+CITY DATA
+============================================================
+*/
+
+const cities = [
+
+  { name:"Colombo", lat:6.9271, lon:79.8612 },
+
+  { name:"Dehiwala", lat:6.8511, lon:79.8656 },
+
+  { name:"Mount Lavinia", lat:6.8344, lon:79.8630 },
+
+  { name:"Sri Jayawardenepura Kotte", lat:6.8941, lon:79.9025 },
+
+  {
+    name:"Kaduwela",
+    lat:6.9360,
+    lon:80.0016,
+    specialNote:
+      "⚠️ If you are entering from (Athurugiriya IC - Magampura IC), Kothalawala IC is the nearest exit."
+  },
+
+  { name:"Maharagama", lat:6.8480, lon:79.9265 },
+
+  { name:"Homagama", lat:6.8440, lon:80.0024 },
+
+  { name:"Kesbewa", lat:6.7951, lon:79.9403 },
+
+  { name:"Moratuwa", lat:6.7730, lon:79.8816 },
+
+  { name:"Nugegoda", lat:6.8720, lon:79.8897 },
+
+  { name:"Piliyandala", lat:6.8010, lon:79.9220 },
+
+  { name:"Avissawella", lat:6.9553, lon:80.2117 },
+
+  { name:"Galle", lat:6.0329, lon:80.2168 },
+
+  { name:"Ambalangoda", lat:6.2355, lon:80.0538 },
+
+  { name:"Hikkaduwa", lat:6.1395, lon:80.1070 },
+
+  { name:"Baddegama", lat:6.1683, lon:80.1810 },
+
+  { name:"Elpitiya", lat:6.2940, lon:80.1710 },
+
+  { name:"Udugama", lat:6.1700, lon:80.3250 },
+
+  { name:"Karandeniya", lat:6.2550, lon:80.0880 },
+
+  { name:"Bentota", lat:6.4211, lon:80.0000 },
+
+  { name:"Kalutara", lat:6.5854, lon:79.9607 },
+
+  { name:"Panadura", lat:6.7132, lon:79.9026 },
+
+  { name:"Horana", lat:6.7153, lon:80.0626 },
+
+  {
+    name:"Beruwala",
+    lat:6.4788,
+    lon:79.9828,
+    specialNote:
+      "⚠️ If you are entering from (Kurundugaha IC - Magampura IC), Welipenna IC is the nearest exit."
+  },
+
+  { name:"Aluthgama", lat:6.4261, lon:79.9948 },
+
+  { name:"Wadduwa", lat:6.6317, lon:79.9280 },
+
+  { name:"Matugama", lat:6.5215, lon:80.1149 },
+
+  { name:"Bandaragama", lat:6.7133, lon:79.9865 },
+
+  { name:"Ingiriya", lat:6.7430, lon:80.1780 },
+
+  { name:"Matara", lat:5.9549, lon:80.5550 },
+
+  { name:"Weligama", lat:5.9738, lon:80.4297 },
+
+  { name:"Akuressa", lat:6.1000, lon:80.4800 },
+
+  { name:"Dikwella", lat:5.9667, lon:80.6833 },
+
+  { name:"Mirissa", lat:5.9486, lon:80.4716 },
+
+  { name:"Kamburupitiya", lat:6.0700, lon:80.5600 },
+
+  { name:"Hakmana", lat:6.0333, lon:80.6500 },
+
+  { name:"Devinuwara", lat:5.9333, lon:80.5833 },
+
+  { name:"Kekanadura", lat:5.9833, lon:80.5667 },
+
+  { name:"Hambantota", lat:6.1241, lon:81.1185 },
+
+  { name:"Tangalle", lat:6.0245, lon:80.7953 },
+
+  { name:"Beliatta", lat:6.0480, lon:80.7340 },
+
+  { name:"Tissamaharama", lat:6.2833, lon:81.2833 },
+
+  { name:"Ambalantota", lat:6.1167, lon:81.0333 },
+
+  { name:"Weeraketiya", lat:6.0500, lon:80.7667 },
+
+  { name:"Sooriyawewa", lat:6.2530, lon:81.0730 },
+
+  { name:"Kataragama", lat:6.4135, lon:81.3340 },
+
+  { name:"Lunugamvehera", lat:6.3400, lon:81.2167 },
+
+  { name:"Kurunegala", lat:7.4863, lon:80.3623 },
+
+  { name:"Kuliyapitiya", lat:7.4688, lon:80.0408 },
+
+  { name:"Wariyapola", lat:7.6297, lon:80.2346 },
+
+  { name:"Nikaweratiya", lat:7.7477, lon:80.1149 },
+
+  { name:"Narammala", lat:7.4333, lon:80.2167 },
+
+  { name:"Mawathagama", lat:7.3897, lon:80.4444 },
+
+  { name:"Polgahawela", lat:7.3333, lon:80.3000 },
+
+  { name:"Pannala", lat:7.3320, lon:80.1080 },
+
+  { name:"Galgamuwa", lat:7.9933, lon:80.2675 },
+
+  { name:"Ibbagamuwa", lat:7.5500, lon:80.4667 },
+
+  { name:"Alawwa", lat:7.3000, lon:80.2500 },
+
+  { name:"Melsiripura", lat:7.7500, lon:80.5000 },
+
+  { name:"Bingiriya", lat:7.6000, lon:79.9167 },
+
+  { name:"Giriulla", lat:7.3333, lon:80.1333 },
+
+  { name:"Kobeigane", lat:7.6833, lon:80.1333 },
+
+  { name:"Maho", lat:7.8333, lon:80.2833 },
+
+  { name:"Dambadeniya", lat:7.3000, lon:80.1667 },
+
+  { name:"Ridigama", lat:7.5667, lon:80.4833 },
+
+  { name:"Polpithigama", lat:7.8167, lon:80.3833 },
+
+  { name:"Boyagane", lat:7.5000, lon:80.3500 },
+
+  { name:"Kandy", lat:7.2906, lon:80.6337 }
+
+];
+
+
+/*
+============================================================
+VEHICLE CATEGORY NOTICES
+============================================================
+
+EDIT THESE THREE NOTICE TEXTS MANUALLY.
+
+These notices are only informational.
+They do NOT affect the toll calculation.
+
+Replace the text below with the official vehicle
+definitions when you have them.
+============================================================
+*/
+
+const vehicleCategories = {
+
+  "1": {
+    name: "Category 1",
+    notice:
+      "Enter the vehicles included in Category 1 here. You can edit this notice manually."
+  },
+
+  "2": {
+    name: "Category 2",
+    notice:
+      "Enter the vehicles included in Category 2 here. You can edit this notice manually."
+  },
+
+  "3": {
+    name: "Category 3",
+    notice:
+      "Enter the vehicles included in Category 3 here. You can edit this notice manually."
+  }
+
+};
+
+
+/*
+============================================================
+TOLL RATE DATA
+============================================================
+
+IMPORTANT:
+The rates below are intentionally left as editable placeholders.
+
+You should enter the correct official toll charge for each:
+Entrance IC + Exit IC + Vehicle Category.
+
+FORMAT:
+
+"entranceId|exitId": {
+  "1": 100,
+  "2": 200,
+  "3": 300
+}
+
+Example:
+
+"e01-kottawa|e01-kahathuduwa": {
+  "1": 100,
+  "2": 150,
+  "3": 200
+}
+
+The system automatically handles the reverse direction too.
+
+If a combination is not entered, the app will say:
+"Toll rate not entered yet."
+============================================================
+*/
+
+const tollRates = {
+
+
+  // E04
+    "e04-meerigama|e04-nakalagamuwa": {1: 200, 2: 250, 3: 400},
+
+  
+  "e04-meerigama|e04-dambokka": {1: 250, 2: 400, 3: 650},
+
+  
+  "e04-meerigama|e04-kurunegala": {1: 300, 2: 450, 3: 700},
+
+ 
+  "e04-meerigama|e04-yaggapitiya": {1: 300, 2: 450, 3: 700},
+
+ 
+  "e04-nakalagamuwa|e04-dambokka": {1: 200, 2: 250, 3: 300},
+
+
+  "e04-nakalagamuwa|e04-kurunegala": {1: 200, 2: 300, 3: 450},
+
+  "e04-nakalagamuwa|e04-yaggapitiya": {1: 200, 2: 300, 3: 450},
+
+
+  "e04-dambokka|e04-kurunegala": {1: 150, 2: 200, 3: 200},
+
+  
+  "e04-dambokka|e04-yaggapitiya": {1: 150, 2: 200, 3: 200},
+
+  "e04-kurunegala|e04-yaggapitiya": {1: 0, 2: 0, 3: 0}
+
+};
+
+
+
+
+
+/*
+============================================================
+APP LOGIC
+============================================================
+*/
+
+const allExits = expressways.flatMap(e =>
+  e.exits.map(x => ({
+    ...x,
+    expresswayId:e.id,
+    expresswayName:e.name
+  }))
+);
+
+
+function showScreen(id) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s => s.classList.remove("active"));
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if (id === "tollScreen") {
+    populateTollEntranceSelect();
+    showVehicleCategoryNotice();
+  }
+}
+
+
+function populateExpresswaySelect() {
+
+  const sel =
+    document.getElementById("expresswaySelect");
+
+  sel.innerHTML =
+    expressways.map(e =>
+      `<option value="${e.id}">
+        ${e.id} — ${e.name.replace(/^E0[123] /,"")}
+      </option>`
+    ).join("");
+
+  populateExitSelect();
+}
+
+
+function populateExitSelect() {
+
+  const eid =
+    document.getElementById("expresswaySelect").value;
+
+  const e =
+    expressways.find(x => x.id === eid);
+
+  const sel =
+    document.getElementById("exitSelect");
+
+  sel.innerHTML =
+    e.exits.map(x =>
+      `<option value="${x.id}">
+        ${x.name}
+      </option>`
+    ).join("");
+}
+
+
+function searchCities() {
+
+  const input =
+    document.getElementById("citySearch");
+
+  const suggestions =
+    document.getElementById("citySuggestions");
+
+  const query =
+    input.value.trim().toLowerCase();
+
+  if (!query) {
+    suggestions.innerHTML = "";
+    return;
+  }
+
+  const matches =
+    cities
+      .filter(c =>
+        c.name.toLowerCase().includes(query)
+      )
+      .slice(0,8);
+
+  if (!matches.length) {
+
+    suggestions.innerHTML =
+      `<div class="small">
+        No cities found.
+      </div>`;
+
+    return;
+  }
+
+  suggestions.innerHTML =
+    matches.map(c => `
+      <div
+        class="city-suggestion"
+        onclick="selectCity('${escapeHtml(c.name)}')"
+      >
+        ${escapeHtml(c.name)}
+      </div>
+    `).join("");
+}
+
+
+function selectCity(name) {
+
+  document.getElementById("citySearch").value = name;
+
+  document.getElementById("citySuggestions").innerHTML = "";
+}
+
+
+function escapeHtml(s) {
+
+  return String(s).replace(/[&<>"']/g, m => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+
+}
+
+
+/*
+============================================================
+HAVERSINE DISTANCE
+============================================================
+*/
+
+function distanceKm(lat1,lon1,lat2,lon2) {
+
+  const R = 6371;
+  const p = Math.PI / 180;
+
+  const dLat =
+    (lat2-lat1) * p;
+
+  const dLon =
+    (lon2-lon1) * p;
+
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(lat1*p) *
+    Math.cos(lat2*p) *
+    Math.sin(dLon/2)**2;
+
+  return R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
+}
+
+
+function mapsLink(lat,lon,name) {
+
+  return `https://www.google.com/maps/search/?api=1&query=${
+    encodeURIComponent(lat+","+lon)
+  }&query_place_id=${
+    encodeURIComponent(name)
+  }`;
+}
+
+
+function directionsLink(lat,lon,name) {
+
+  return `https://www.google.com/maps/dir/?api=1&destination=${
+    encodeURIComponent(lat+","+lon)
+  }&destination_place_id=${
+    encodeURIComponent(name)
+  }`;
+}
+
+
+/*
+============================================================
+SPECIAL IC NOTE
+============================================================
+*/
+
+function specialNoteHtml(exit) {
+
+  if (!exit || !exit.specialNote) {
+    return "";
+  }
+
+  return `
+    <div class="special-note">
+
+      <div class="special-note-title">
+        ⚠️ Special IC Notice
+      </div>
+
+      ${escapeHtml(exit.specialNote)}
+
+    </div>
+  `;
+}
+
+
+/*
+============================================================
+EXIT → CITIES
+============================================================
+*/
+
+function findCitiesFromExit() {
+
+  const exitId =
+    document.getElementById("exitSelect").value;
+
+  const exit =
+    allExits.find(x => x.id === exitId);
+
+  const maxKm =
+    Number(
+      document.getElementById("cityRadius").value
+    );
+
+  if (!exit) {
+    return;
+  }
+
+  const results =
+    cities
+      .map(c => ({
+        ...c,
+        distance:
+          distanceKm(
+            exit.lat,
+            exit.lon,
+            c.lat,
+            c.lon
+          )
+      }))
+      .filter(c => c.distance <= maxKm)
+      .sort((a,b) => a.distance-b.distance);
+
+  const box =
+    document.getElementById("exitResults");
+
+  box.innerHTML = `
+    <div class="card">
+
+      <span class="badge">
+        ${escapeHtml(exit.expresswayId)}
+      </span>
+
+      <h2>
+        ${escapeHtml(exit.name)} Exit
+      </h2>
+
+      <p class="small">
+        ${escapeHtml(exit.expresswayName)}
+      </p>
+
+      ${specialNoteHtml(exit)}
+
+      ${
+        results.length
+          ? results.map(c => cityCard(c)).join("")
+          : `<div class="error">
+               No sample cities found inside ${maxKm} km.
+             </div>`
+      }
+
+    </div>
+  `;
+}
+
+
+function cityCard(c) {
+
+  return `
+    <div class="result">
+
+      <h3>
+        ${escapeHtml(c.name)}
+      </h3>
+
+      <div class="distance">
+        ${c.distance.toFixed(1)}
+        km straight-line distance
+      </div>
+
+      <div class="actions">
+
+        <a
+          href="${mapsLink(c.lat,c.lon,c.name)}"
+          target="_blank"
+          rel="noopener"
+        >
+          🗺️ Open City
+        </a>
+
+        <a
+          href="${directionsLink(c.lat,c.lon,c.name)}"
+          target="_blank"
+          rel="noopener"
+        >
+          🚗 Directions
+        </a>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/*
+============================================================
+CITY → NEAREST EXIT
+============================================================
+*/
+
+function findExitsFromCity() {
+
+  const cityName =
+    document.getElementById("citySearch").value.trim();
+
+  const city =
+    cities.find(c => c.name === cityName);
+
+  const modal =
+    document.getElementById("nearestExitModal");
+
+  const content =
+    document.getElementById("nearestExitModalContent");
+
+  if (!city) {
+
+    content.innerHTML = `
+      <div class="error">
+        Please select a city from the suggestions.
+      </div>
+    `;
+
+    modal.classList.add("show");
+
+    return;
+  }
+
+  const nearest =
+    allExits
+      .map(e => ({
+        ...e,
+        distance:
+          distanceKm(
+            city.lat,
+            city.lon,
+            e.lat,
+            e.lon
+          )
+      }))
+      .sort((a,b) => a.distance - b.distance)[0];
+
+  content.innerHTML = `
+
+    <span class="badge">
+      NEAREST EXIT
+    </span>
+
+    <h2>
+      ${escapeHtml(city.name)}
+    </h2>
+
+    ${city.specialNote ? `
+      <div class="special-note">
+
+        <div class="special-note-title">
+          ⚠️ Special City Notice
+        </div>
+
+        ${escapeHtml(city.specialNote)}
+
+      </div>
+    ` : ""}
+
+    ${exitCard(nearest)}
+
+  `;
+
+  modal.classList.add("show");
+}
+function closeNearestExitModal(event) {
+
+  if (event && event.target !== event.currentTarget) {
+    return;
+  }
+
+  document
+    .getElementById("nearestExitModal")
+    .classList.remove("show");
+}
+
+
+
+function exitCard(e) {
+
+  return `
+    <div class="result">
+
+      <span class="badge">
+        ${escapeHtml(e.expresswayId)}
+      </span>
+
+      <h3>
+        ${escapeHtml(e.name)}
+      </h3>
+
+      <div class="small">
+        ${escapeHtml(e.expresswayName)}
+      </div>
+
+      <div class="distance">
+        ${e.distance.toFixed(1)}
+        km straight-line distance
+      </div>
+
+      <div class="actions">
+
+        <a
+          href="${mapsLink(e.lat,e.lon,e.name)}"
+          target="_blank"
+          rel="noopener"
+        >
+          🗺️ Open Exit
+        </a>
+
+        <a
+          href="${directionsLink(e.lat,e.lon,e.name)}"
+          target="_blank"
+          rel="noopener"
+        >
+          🚗 Directions
+        </a>
+
+      </div>
+
+      ${specialNoteHtml(e)}
+
+    </div>
+  `;
+}
+
+
+/*
+============================================================
+GPS
+============================================================
+*/
+
+function findNearestByGPS(openGpsScreen=false) {
+
+  if (openGpsScreen) {
+    showScreen("gpsScreen");
+  }
+
+  const target =
+    document.getElementById(
+      openGpsScreen
+        ? "gpsResult"
+        : "gpsHomeResult"
+    );
+
+
+  target.innerHTML = `
+    <div class="card">
+      <p class="small">
+        Requesting your location…
+        Please allow location access in Chrome.
+      </p>
+    </div>
+  `;
+
+
+  if (!navigator.geolocation) {
+
+    target.innerHTML = `
+      <div class="error">
+        GPS/location is not supported by this browser.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    pos => {
+
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+
+
+      const results =
+        allExits
+          .map(e => ({
+            ...e,
+            distance:
+              distanceKm(
+                lat,
+                lon,
+                e.lat,
+                e.lon
+              )
+          }))
+          .sort((a,b) =>
+            a.distance-b.distance
+          );
+
+
+      const nearest = results[0];
+
+
+      target.innerHTML = `
+        <div class="card">
+
+          <span class="badge">
+            GPS RESULT
+          </span>
+
+          <h2>
+            Nearest sample exit
+          </h2>
+
+          ${exitCard(nearest)}
+
+          <div class="success">
+
+            GPS accuracy reported by your phone:
+            approximately
+            ${
+              pos.coords.accuracy
+                ? Math.round(pos.coords.accuracy) + " m"
+                : "unknown"
+            }.
+
+          </div>
+
+          <div class="notice">
+
+            The distance above is straight-line distance
+            from your GPS position.
+            Actual road/driving distance may be different.
+
+          </div>
+
+        </div>
+      `;
+    },
+
+
+    err => {
+
+      let msg =
+        "Could not get your location.";
+
+      if (err.code === 1) {
+        msg =
+          "Location permission was denied. Enable Location permission for your browser and try again.";
+      }
+
+      if (err.code === 2) {
+        msg =
+          "Your location could not be determined. Check GPS/location services.";
+      }
+
+      if (err.code === 3) {
+        msg =
+          "Location request timed out. Try again.";
+      }
+
+      target.innerHTML =
+        `<div class="error">${msg}</div>`;
+    },
+
+
+    {
+      enableHighAccuracy:true,
+      timeout:15000,
+      maximumAge:60000
+    }
+
+  );
+}
+
+
+/*
+============================================================
+TOLL CALCULATOR
+============================================================
+*/
+
+/*
+Get all ICs in one list.
+The toll calculator uses every IC in the expressway data.
+*/
+
+function populateTollEntranceSelect() {
+
+  const entrance =
+    document.getElementById("tollEntrance");
+
+  if (!entrance) return;
+
+  entrance.innerHTML =
+    expressways.map(e => `
+      <optgroup label="${escapeHtml(e.id + " — " + e.name)}">
+        ${e.exits.map(x => `
+          <option value="${escapeHtml(x.id)}">
+            ${escapeHtml(x.name)}
+          </option>
+        `).join("")}
+      </optgroup>
+    `).join("");
+
+  updateTollExitOptions();
+}
+
+
+function updateTollExitOptions() {
+
+  const entranceId =
+    document.getElementById("tollEntrance").value;
+
+  const exitSelect =
+    document.getElementById("tollExit");
+
+  if (!exitSelect) return;
+
+  exitSelect.innerHTML =
+    expressways.map(e => `
+      <optgroup label="${escapeHtml(e.id + " — " + e.name)}">
+        ${e.exits
+          .filter(x => x.id !== entranceId)
+          .map(x => `
+            <option value="${escapeHtml(x.id)}">
+              ${escapeHtml(x.name)}
+            </option>
+          `).join("")
+        }
+      </optgroup>
+    `).join("");
+}
+
+
+/*
+Show the editable notice for Category 1/2/3.
+*/
+
+function selectVehicleCategory(category) {
+
+  document.getElementById("vehicleCategory").value = category;
+
+  document
+    .querySelectorAll(".vehicle-category-btn")
+    .forEach(btn => {
+      btn.classList.remove("selected");
+    });
+
+  const selectedButton =
+    document.getElementById("categoryBtn" + category);
+
+  if (selectedButton) {
+    selectedButton.classList.add("selected");
+  }
+
+  showVehicleCategoryNotice();
+}
+
+
+function showVehicleCategoryNotice() {
+
+  const category =
+    document.getElementById("vehicleCategory").value;
+
+  const data =
+    vehicleCategories[category];
+
+  const box =
+    document.getElementById("vehicleCategoryNotice");
+
+  if (!data) {
+    box.innerHTML = "";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="category-note category-${category}">
+
+      <div class="category-note-title">
+        🚗 ${escapeHtml(data.name)} — Vehicles
+      </div>
+
+      ${escapeHtml(data.notice)}
+
+    </div>
+  `;
+}
+/*
+Create a consistent key for an entrance/exit pair.
+The database accepts either direction.
+
+Example:
+e01-kottawa|e01-kahathuduwa
+
+or:
+e01-kahathuduwa|e01-kottawa
+*/
+
+function getTollRate(entranceId, exitId, category) {
+
+  const directKey =
+    `${entranceId}|${exitId}`;
+
+  const reverseKey =
+    `${exitId}|${entranceId}`;
+
+  if (
+    tollRates[directKey] &&
+    tollRates[directKey][category] !== undefined
+  ) {
+    return tollRates[directKey][category];
+  }
+
+  if (
+    tollRates[reverseKey] &&
+    tollRates[reverseKey][category] !== undefined
+  ) {
+    return tollRates[reverseKey][category];
+  }
+
+  return null;
+}
+
+
+function calculateToll() {
+
+  const entranceId =
+    document.getElementById("tollEntrance").value;
+
+  const exitId =
+    document.getElementById("tollExit").value;
+
+  const category =
+    document.getElementById("vehicleCategory").value;
+
+  const modal =
+    document.getElementById("tollModal");
+
+  const modalContent =
+    document.getElementById("tollModalContent");
+
+  const entrance =
+    allExits.find(e => e.id === entranceId);
+
+  const exit =
+    allExits.find(e => e.id === exitId);
+
+  if (!entrance || !exit) {
+
+    modalContent.innerHTML = `
+      <div class="error">
+        Please select both an entrance IC and an exit IC.
+      </div>
+    `;
+
+    modal.classList.add("show");
+    return;
+  }
+
+  if (entrance.id === exit.id) {
+
+    modalContent.innerHTML = `
+      <div class="error">
+        Entrance IC and Exit IC cannot be the same.
+      </div>
+    `;
+
+    modal.classList.add("show");
+    return;
+  }
+
+  const rate =
+    getTollRate(
+      entranceId,
+      exitId,
+      category
+    );
+
+  const categoryData =
+    vehicleCategories[category];
+
+  if (rate === null) {
+
+    modalContent.innerHTML = `
+      <span class="badge">TOLL RESULT</span>
+
+      <h2>
+        ${escapeHtml(entrance.name)}
+        →
+        ${escapeHtml(exit.name)}
+      </h2>
+
+      <div class="small">
+        Vehicle: ${escapeHtml(categoryData.name)}
+      </div>
+
+      <div class="error">
+        Toll rate has not been entered yet for this
+        entrance, exit and vehicle-category combination.
+      </div>
+    `;
+
+    modal.classList.add("show");
+    return;
+  }
+
+  modalContent.innerHTML = `
+    <span class="badge">TOLL RESULT</span>
+
+    <h2>
+      ${escapeHtml(entrance.name)}
+      →
+      ${escapeHtml(exit.name)}
+    </h2>
+
+    <div class="small">
+      ${escapeHtml(entrance.expresswayName)}
+      <br>
+      Vehicle: ${escapeHtml(categoryData.name)}
+    </div>
+
+    <div class="toll-result">
+
+      <div class="small">
+        Toll Charge
+      </div>
+
+      <div class="amount">
+        Rs. ${Number(rate).toLocaleString("en-LK")}
+      </div>
+
+    </div>
+
+    <div class="category-note">
+
+      <div class="category-note-title">
+        ${escapeHtml(categoryData.name)} — Vehicle Notice
+      </div>
+
+      ${escapeHtml(categoryData.notice)}
+
+    </div>
+
+    <div class="notice">
+      Please verify this toll amount against the latest
+      official Sri Lankan expressway toll information
+      before relying on it for payment.
+    </div>
+  `;
+
+  modal.classList.add("show");
+}
+  function closeTollModal(event) {
+
+  if (event && event.target !== event.currentTarget) {
+    return;
+  }
+
+  document
+    .getElementById("tollModal")
+    .classList.remove("show");
+}
+/*
+============================================================
+LANGUAGE
+============================================================
+*/
+
+const text = {
+
+  en: {
+
+    appTitle:"Sri Lanka Expressway Finder & Toll Calculator",
+
+    appSubtitle:
+      "Find cities near an expressway exit, find the nearest exit to a city, use GPS, or calculate toll charges.",
+
+    exitToCityTitle:
+      "Interchange → Nearby Cities",
+
+    exitToCityDesc:
+      "Select an expressway interchange and see nearby cities/towns.",
+
+    cityToExitTitle:
+      "City → Nearest Exit",
+
+    cityToExitDesc:
+      "Select a city and find the nearest exit.",
+
+    gpsTitle:
+      "GPS → Nearest Exit",
+
+    gpsDesc:
+      "Use your phone location to calculate the nearest exit.",
+
+    tollTitle:
+      "Toll Charges",
+
+    tollDesc:
+      "Select entrance, exit and vehicle category to calculate the toll charge.",
+
+    back:"Back",
+
+    exitScreenTitle:
+      "Find cities near an exit",
+
+    expresswayLabel:
+      "Expressway",
+
+    exitLabel:
+      "Exit",
+
+    radiusLabel:
+      "Maximum distance",
+
+    findCitiesBtn:
+      "Find Nearby Cities",
+
+    cityScreenTitle:
+      "Find the nearest exit to a city",
+
+    cityLabel:
+      "City / Town",
+
+    findExitBtn:
+      "Find Nearest Exit",
+
+    gpsScreenTitle:
+      "Nearest exit using GPS",
+
+    gpsExplain:
+      "Your browser will ask for location permission. Your location is processed only in this page.",
+
+    gpsButton:
+      "📍 Find My Nearest Exit",
+
+    tollScreenTitle:
+      "Expressway Toll Calculator",
+
+    tollInstructionTitle:
+      "How to use:",
+
+    tollInstruction:
+      "Select the IC where you enter, the IC where you exit, and your vehicle category.",
+
+    tollEntranceLabel:
+      "Entrance IC",
+
+    tollExitLabel:
+      "Exit IC",
+
+    vehicleCategoryLabel:
+      "Vehicle Category",
+
+    calculateTollBtn:
+      "Calculate Toll Charge"
+
+  },
+
+
+  si: {
+
+    appTitle:
+      "ශ්‍රී ලංකා අධිවේගී මාර්ග සෙවුම සහ ගාස්තු ගණනය",
+
+    appSubtitle:
+      "අධිවේගී පිවිසුමක් අසල නගර සොයන්න, නගරයකට ආසන්නම පිවිසුම සොයන්න, GPS භාවිතා කරන්න හෝ ගාස්තුව ගණනය කරන්න.",
+
+    exitToCityTitle:
+      "පිවිසුම → ආසන්න නගර",
+
+    exitToCityDesc:
+      "අධිවේගී පිවිසුමක් තෝරා ආසන්න නගර/ප්‍රදේශ බලන්න.",
+
+    cityToExitTitle:
+      "නගරය → ආසන්නම පිවිසුම",
+
+    cityToExitDesc:
+      "නගරයක් තෝරා ආසන්නම පිවිසුම සොයන්න.",
+
+    gpsTitle:
+      "GPS → ආසන්නම පිවිසුම",
+
+    gpsDesc:
+      "දුරකථනයේ ස්ථානය භාවිතයෙන් ආසන්නම පිවිසුම සොයන්න.",
+
+    tollTitle:
+      "අධිවේගී ගාස්තු",
+
+    tollDesc:
+      "ඇතුළු වන පිවිසුම, පිටවන පිවිසුම සහ වාහන කාණ්ඩය තෝරා ගාස්තුව ගණනය කරන්න.",
+
+    back:
+      "ආපසු",
+
+    exitScreenTitle:
+      "පිවිසුමකට ආසන්න නගර සොයන්න",
+
+    expresswayLabel:
+      "අධිවේගී මාර්ගය",
+
+    exitLabel:
+      "පිවිසුම",
+
+    radiusLabel:
+      "උපරිම දුර",
+
+    findCitiesBtn:
+      "ආසන්න නගර සොයන්න",
+
+    cityScreenTitle:
+      "නගරයකට ආසන්නම පිවිසුම සොයන්න",
+
+    cityLabel:
+      "නගරය / ප්‍රදේශය",
+
+    findExitBtn:
+      "ආසන්නම පිවිසුම සොයන්න",
+
+    gpsScreenTitle:
+      "GPS මගින් ආසන්නම පිවිසුම",
+
+    gpsExplain:
+      "ස්ථාන අවසරය ලබා දෙන ලෙස බ්‍රවුසරය ඔබගෙන් ඉල්ලා සිටිය හැක.",
+
+    gpsButton:
+      "📍 මගේ ආසන්නම පිවිසුම සොයන්න",
+
+    tollScreenTitle:
+      "අධිවේගී මාර්ග ගාස්තු ගණනය",
+
+    tollInstructionTitle:
+      "භාවිතා කරන ආකාරය:",
+
+    tollInstruction:
+      "ඔබ ඇතුළු වන පිවිසුම, පිටවන පිවිසුම සහ වාහන කාණ්ඩය තෝරන්න.",
+
+    tollEntranceLabel:
+      "ඇතුළු වන පිවිසුම",
+
+    tollExitLabel:
+      "පිටවන පිවිසුම",
+
+    vehicleCategoryLabel:
+      "වාහන කාණ්ඩය",
+
+    calculateTollBtn:
+      "ගාස්තුව ගණනය කරන්න"
+
+  }
+
+};
+
+
+function setLanguage(lang) {
+
+  const t =
+    text[lang] || text.en;
+
+  Object.keys(t).forEach(id => {
+
+    const el =
+      document.getElementById(id);
+
+    if (!el) return;
+
+
+    if (id === "appTitle") {
+
+      const logo =
+        el.querySelector(".header-logo");
+
+      el.textContent = "";
+
+      if (logo) {
+        el.appendChild(logo);
+      }
+
+      el.appendChild(
+        document.createTextNode(
+          " " + t[id]
+        )
+      );
+
+    } else {
+
+      el.textContent = t[id];
+
+    }
+
+  });
+
+
+  document.documentElement.lang =
+    lang === "si"
+      ? "si"
+      : "en";
+}
+
+
+/*
+============================================================
+INITIALIZE
+============================================================
+*/
+
+populateExpresswaySelect();
+selectVehicleCategory("1");
+
+populateTollEntranceSelect();
+
+showVehicleCategoryNotice();
+
+</script>
+<!-- Nearest Exit Popup -->
+<div id="nearestExitModal"
+     class="nearest-exit-modal"
+     onclick="closeNearestExitModal(event)">
+
+  <div class="nearest-exit-modal-card"
+       onclick="event.stopPropagation()">
+
+    <button class="nearest-exit-close"
+            onclick="closeNearestExitModal()">
+      ×
+    </button>
+
+    <div id="nearestExitModalContent"></div>
+
+  </div>
+</div>
+  <!-- Toll Result Popup -->
+<div id="tollModal" class="toll-modal" onclick="closeTollModal(event)">
+  <div class="toll-modal-card" onclick="event.stopPropagation()">
+
+    <button class="toll-modal-close" onclick="closeTollModal()">
+      ×
+    </button>
+
+    <div id="tollModalContent"></div>
+
+  </div>
+</div>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("service-worker.js");
+  });
+}
+</script>
+</body>
+</html>
