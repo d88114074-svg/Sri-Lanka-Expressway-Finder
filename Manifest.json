@@ -1,0 +1,17 @@
+{
+  "name": "Sri Lanka Expressway Finder",
+  "short_name": "Expressway Finder",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b5ed7",
+  "orientation": "portrait",
+  "description": "Sri Lanka Expressway Finder and Toll Calculator",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
