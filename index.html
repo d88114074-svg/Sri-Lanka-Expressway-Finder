@@ -35,87 +35,7 @@
       background:var(--bg);
       color:var(--text);
     }
-	 <!-- Startup Disclaimer Popup --><div id="disclaimerPopup" class="disclaimer-overlay" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle">
-  <div class="disclaimer-box">
-    <h2 id="disclaimerTitle">Sri Lanka Expressway Finder</h2><p>
-  <strong>Disclaimer:</strong> Sri Lanka Expressway Finder is an
-  independent informational web application and is not affiliated with
-  or operated by the Road Development Authority (RDA).
-</p>
-
-<p>
-  Toll charges and other information are provided for reference only.
-  Please verify current information with the official expressway
-  authorities.
-</p>
-
-<div class="disclaimer-buttons">
-  <button type="button" id="continueDisclaimer" class="continue-btn">
-    ✓ I Understand
-  </button>
-</div>
-
-  </div>
-</div><style>
-.disclaimer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.disclaimer-box {
-  background: white;
-  width: 100%;
-  max-width: 420px;
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  box-sizing: border-box;
-}
-
-.disclaimer-box h2 {
-  margin-top: 0;
-  font-size: 22px;
-}
-
-.disclaimer-box p {
-  text-align: left;
-  line-height: 1.6;
-  font-size: 15px;
-}
-
-.disclaimer-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.disclaimer-buttons button {
-  flex: 1;
-  border: none;
-  border-radius: 10px;
-  padding: 13px 8px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.continue-btn {
-  background: #198754;
-  color: white;
-}
-
-#disclaimerPopup.is-hidden {
-  display: none;
-}
-</style>
+	
  
   /* Toll Result Popup */
 .toll-modal {
@@ -658,6 +578,87 @@
 </head>
 
 <body>
+	 <!-- Startup Disclaimer Popup --><div id="disclaimerPopup" class="disclaimer-overlay" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle">
+  <div class="disclaimer-box">
+    <h2 id="disclaimerTitle">Sri Lanka Expressway Finder</h2><p>
+  <strong>Disclaimer:</strong> Sri Lanka Expressway Finder is an
+  independent informational web application and is not affiliated with
+  or operated by the Road Development Authority (RDA).
+</p>
+
+<p>
+  Toll charges and other information are provided for reference only.
+  Please verify current information with the official expressway
+  authorities.
+</p>
+
+<div class="disclaimer-buttons">
+  <button type="button" id="continueDisclaimer" class="continue-btn">
+    ✓ I Understand
+  </button>
+</div>
+
+  </div>
+</div><style>
+.disclaimer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.disclaimer-box {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.disclaimer-box h2 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.disclaimer-box p {
+  text-align: left;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.disclaimer-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.disclaimer-buttons button {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.continue-btn {
+  background: #198754;
+  color: white;
+}
+
+#disclaimerPopup.is-hidden {
+  display: none;
+}
+</style>
 <div class="app">
 
   <header>
