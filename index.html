@@ -1037,174 +1037,172 @@ CITY DATA
 
 const cities = [
 
- 
-
-  // Western Province and E01 Southern Expressway area
-  {name:"Colombo", lat:6.9271, lon:79.8612},
-  {name:"Maharagama", lat:6.8440, lon:79.9265},
-  {name:"Kottawa", lat:6.8410, lon:79.9650},
-  {name:"Homagama", lat:6.8440, lon:80.0030},
-  {name:"Pannipitiya", lat:6.8460, lon:79.9470},
-  {name:"Kesbewa", lat:6.7950, lon:79.9600},
-  {name:"Piliyandala", lat:6.8010, lon:79.9220},
-  {name:"Moratuwa", lat:6.7730, lon:79.8820},
-  {name:"Panadura", lat:6.7130, lon:79.9040},
-  {name:"Horana", lat:6.7150, lon:80.0630},
-  {name:"Bandaragama", lat:6.7140, lon:79.9870},
-  {name:"Ingiriya", lat:6.7380, lon:80.1780},
-  {name:"Kalutara", lat:6.5854, lon:79.9607,specialNote:
+ // Western Province and E01 Southern Expressway area
+  {name:"Colombo", lat:6.9271, lon:79.8612, sinhala:"කොළඹ"},
+  {name:"Maharagama", lat:6.8440, lon:79.9265, sinhala:"මහරගම"},
+  {name:"Kottawa", lat:6.8410, lon:79.9650, sinhala:"කොට්ටාව"},
+  {name:"Homagama", lat:6.8440, lon:80.0030, sinhala:"හෝමාගම"},
+  {name:"Pannipitiya", lat:6.8460, lon:79.9470, sinhala:"පන්නිපිටිය"},
+  {name:"Kesbewa", lat:6.7950, lon:79.9600, sinhala:"කැස්බෑව"},
+  {name:"Piliyandala", lat:6.8010, lon:79.9220, sinhala:"පිළියන්දල"},
+  {name:"Moratuwa", lat:6.7730, lon:79.8820, sinhala:"මොරටුව"},
+  {name:"Panadura", lat:6.7130, lon:79.9040, sinhala:"පානදුර"},
+  {name:"Horana", lat:6.7150, lon:80.0630, sinhala:"හොරණ"},
+  {name:"Bandaragama", lat:6.7140, lon:79.9870, sinhala:"බණ්ඩාරගම"},
+  {name:"Ingiriya", lat:6.7380, lon:80.1780, sinhala:"ඉංගිරිය"},
+  {name:"Kalutara", lat:6.5854, lon:79.9607, sinhala:"කළුතර",specialNote:
       "If you are entering from katunayake direction, gelanigama IC is the nearest exit."},
-  {name:"Wadduwa", lat:6.6680, lon:79.9230},
-  {name:"Matugama", lat:6.5230, lon:80.1140,specialNote:
+  {name:"Wadduwa", lat:6.6680, lon:79.9230, sinhala:"වාද්දුව"},
+  {name:"Matugama", lat:6.5230, lon:80.1140, sinhala:"මතුගම",specialNote:
       "If you are entering from mattala direction, Welipenna IC is the nearest exit."},
-  {name:"Gelanigama", lat:6.6900, lon:79.9790},
-  {name:"Dodangoda", lat:6.5660, lon:80.0170},
-  {name:"Welipenna", lat:6.4880, lon:80.0750},
-  {name:"Aluthgama", lat:6.4330, lon:79.9950},
-  {name:"Bentota", lat:6.4250, lon:79.9950},
-  {name:"Ambalangoda", lat:6.2350, lon:80.0540},
-  {name:"Elpitiya", lat:6.3010, lon:80.1620},
-  {name:"Baddegama", lat:6.1670, lon:80.1770},
-  {name:"Hikkaduwa", lat:6.1400, lon:80.1020},
-  {name:"Galle", lat:6.0535, lon:80.2210},
-  {name:"Pinnaduwa", lat:6.0410, lon:80.3040},
-  {name:"Imaduwa", lat:6.0470, lon:80.4120},
-  {name:"Weligama", lat:5.9750, lon:80.4290},
-  {name:"Akuressa", lat:6.096220, lon:80.487637,specialNote:
+  {name:"Gelanigama", lat:6.6900, lon:79.9790, sinhala:"ගැලනිගම"},
+  {name:"Dodangoda", lat:6.5660, lon:80.0170, sinhala:"දොඩන්ගොඩ"},
+  {name:"Welipenna", lat:6.4880, lon:80.0750, sinhala:"වැලිපැන්න"},
+  {name:"Aluthgama", lat:6.4330, lon:79.9950, sinhala:"අලුත්ගම"},
+  {name:"Bentota", lat:6.4250, lon:79.9950, sinhala:"බෙන්තොට"},
+  {name:"Ambalangoda", lat:6.2350, lon:80.0540, sinhala:"අම්බලන්ගොඩ"},
+  {name:"Elpitiya", lat:6.3010, lon:80.1620, sinhala:"ඇල්පිටිය"},
+  {name:"Baddegama", lat:6.1670, lon:80.1770, sinhala:"බද්දේගම"},
+  {name:"Hikkaduwa", lat:6.1400, lon:80.1020, sinhala:"හික්කඩුව"},
+  {name:"Galle", lat:6.0535, lon:80.2210, sinhala:"ගාල්ල"},
+  {name:"Pinnaduwa", lat:6.0410, lon:80.3040, sinhala:"පින්නදූව"},
+  {name:"Imaduwa", lat:6.0470, lon:80.4120, sinhala:"ඉමදූව"},
+  {name:"Weligama", lat:5.9750, lon:80.4290, sinhala:"වැලිගම"},
+  {name:"Akuressa", lat:6.096220, lon:80.487637, sinhala:"අකුරැස්ස",specialNote:
       "If you are entering from katunayake direction, Imaduwa IC is the nearest exit."},
-  {name:"Kamburupitiya", lat:6.0770, lon:80.5640,specialNote:
+  {name:"Kamburupitiya", lat:6.0770, lon:80.5640, sinhala:"කඹුරුපිටිය",specialNote:
       "If you are entering from Mattala direction, Beliatta IC is the nearest exit."},
-  {name:"Matara", lat:5.9485, lon:80.5353},
-  {name:"Kekanadura", lat:5.976157, lon:80.619355},
-  {name:"Godagama", lat:6.0000, lon:80.5600},
-  {name:"Dikwella", lat:5.976695, lon:80.698676,specialNote:
+  {name:"Matara", lat:5.9485, lon:80.5353, sinhala:"මාතර"},
+  {name:"Kekanadura", lat:5.976157, lon:80.619355, sinhala:"කැකණදුර"},
+  {name:"Godagama", lat:6.0000, lon:80.5600, sinhala:"ගොඩගම"},
+  {name:"Dikwella", lat:5.976695, lon:80.698676, sinhala:"දික්වැල්ල",specialNote:
       "If you are entering from katunayake direction , Aparekka IC is the nearest exit."},
-  {name:"Hakmana", lat:6.0860, lon:80.6470,specialNote:
+  {name:"Hakmana", lat:6.0860, lon:80.6470, sinhala:"හක්මන",specialNote:
       "If you are entering from Mattala Direction, Beliatta IC is the nearest exit."},
 
   // E02 Outer Circular Expressway and nearby cities
-  {name:"Wattala", lat:6.9900, lon:79.8910,specialNote:
+  {name:"Wattala", lat:6.9900, lon:79.8910, sinhala:"වත්තල",specialNote:
       "If you are entering from southern direction or katunayake direction, Kerawalapitiya IC is the nearest exit."},
-  {name:"Ja-Ela", lat:7.0740, lon:79.8910},
-  {name:"Kandana", lat:7.0480, lon:79.8950,specialNote:
+  {name:"Ja-Ela", lat:7.0740, lon:79.8910, sinhala:"ජා-ඇල"},
+  {name:"Kandana", lat:7.0480, lon:79.8950, sinhala:"කඳාන",specialNote:
       "If you are entering from katunayake IC, Ja-Ela IC is the nearest exit."},
-  {name:"Ragama", lat:7.0290, lon:79.9170,specialNote:
+  {name:"Ragama", lat:7.0290, lon:79.9170, sinhala:"රාගම",specialNote:
       "If you are entering from (kaduwela IC - Magampura IC), Kadawatha IC is the nearest exit."},
-  {name:"Walisara", lat:7.0130, lon:79.8870},
-  {name:"Kelaniya", lat:6.9550, lon:79.9220},
-  {name:"Peliyagoda", lat:6.9600, lon:79.8780},
-  {name:"Kadawatha", lat:7.0010, lon:79.9540},
-  {name:"Kiribathgoda", lat:6.979073, lon:79.928164,specialNote:
+  {name:"Walisara", lat:7.0130, lon:79.8870, sinhala:"වත්තල"},
+  {name:"Kelaniya", lat:6.9550, lon:79.9220, sinhala:"කැලණිය"},
+  {name:"Peliyagoda", lat:6.9600, lon:79.8780, sinhala:"පෑලියගොඩ"},
+  {name:"Kadawatha", lat:7.0010, lon:79.9540, sinhala:"කඩවත"},
+  {name:"Kiribathgoda", lat:6.979073, lon:79.928164, sinhala:"කිරිබත්ගොඩ",specialNote:
       "If you are entering from southern direction Kadawatha IC is the nearest exit."},
-  {name:"Biyagama", lat:6.9450, lon:80.0020},
-  {name:"Malabe", lat:6.904099, lon:79.954544},
-  {name:"Kaduwela", lat:6.935712, lon:79.983719,specialNote:
+  {name:"Biyagama", lat:6.9450, lon:80.0020, sinhala:"බියගම"},
+  {name:"Malabe", lat:6.904099, lon:79.954544, sinhala:"මාලබේ"},
+  {name:"Kaduwela", lat:6.935712, lon:79.983719, sinhala:"කඩුවෙල",specialNote:
       "If you are entering from southern direction, Kothalawala IC is the nearest exit."},
-  {name:"Battaramulla", lat:6.9000, lon:79.9180},
-  {name:"Athurugiriya", lat:6.8720, lon:79.9970},
-  {name:"Kohuwala", lat:6.8660, lon:79.9010},
-  {name:"Dehiwala", lat:6.8520, lon:79.8650,specialNote:
+  {name:"Battaramulla", lat:6.9000, lon:79.9180, sinhala:"බත්තරමුල්ල"},
+  {name:"Athurugiriya", lat:6.8720, lon:79.9970, sinhala:"අතුරුගිරිය"},
+  {name:"Kohuwala", lat:6.8660, lon:79.9010, sinhala:"කොහුවල"},
+  {name:"Dehiwala", lat:6.8520, lon:79.8650, sinhala:"දෙහිවල",specialNote:
       "If you are entering from katunayake direction, Peliyagoda IC is the nearest exit.If you are entering from mattala direction,Kahathuduwa IC is the nearest exit"},
-  {name:"Nugegoda", lat:6.8720, lon:79.8890},
+  {name:"Nugegoda", lat:6.8720, lon:79.8890, sinhala:"නුගේගොඩ"},
 
   // E03 Colombo-Katunayake Expressway and nearby cities
-  {name:"Grandpass", lat:6.9510, lon:79.8680},
-  {name:"Mahabage", lat:7.0120, lon:79.8990},
-  {name:"Ekala", lat:7.0940, lon:79.9090},
-  {name:"Seeduwa", lat:7.0600, lon:79.8920},
-  {name:"Katunayake", lat:7.1690, lon:79.8850},
-  {name:"Negombo", lat:7.2083, lon:79.8358},
-  {name:"Kochchikade", lat:7.2610, lon:79.8550},
-  {name:"Minuwangoda", lat:7.1740, lon:79.9530},
-  {name:"Divulapitiya", lat:7.2200, lon:80.0170},
-  {name:"Gampaha", lat:7.0873, lon:80.0142},
+  {name:"Grandpass", lat:6.9510, lon:79.8680, sinhala:"ග්‍රෑන්ඩ්පාස්"},
+  {name:"Mahabage", lat:7.0120, lon:79.8990, sinhala:"මහබාගේ"},
+  {name:"Ekala", lat:7.0940, lon:79.9090, sinhala:"ඒකල"},
+  {name:"Seeduwa", lat:7.0600, lon:79.8920, sinhala:"සීදූව"},
+  {name:"Katunayake", lat:7.1690, lon:79.8850, sinhala:"කටුනායක"},
+  {name:"Negombo", lat:7.2083, lon:79.8358, sinhala:"මීගමුව"},
+  {name:"Kochchikade", lat:7.2610, lon:79.8550, sinhala:"කොච්චිකඩේ"},
+  {name:"Minuwangoda", lat:7.1740, lon:79.9530, sinhala:"මිනුවන්ගොඩ"},
+  {name:"Divulapitiya", lat:7.2200, lon:80.0170, sinhala:"දිවුලපිටිය"},
+  {name:"Gampaha", lat:7.0873, lon:80.0142, sinhala:"ගම්පහ"},
 
   // E04 Central Expressway vicinity and central/north-western cities
-  {name:"Mirigama", lat:7.2450, lon:80.1250},
-  {name:"Veyangoda", lat:7.1560, lon:80.0970},
-  {name:"Nittambuwa", lat:7.1440, lon:80.0960},
-  {name:"Pallewela", lat:7.2450, lon:80.0750},
-  {name:"Pannala", lat:7.3300, lon:80.0150},
-  {name:"Kuliyapitiya", lat:7.4680, lon:80.0400},
-  {name:"Narammala", lat:7.4310, lon:80.2060},
-  {name:"Dambadeniya", lat:7.3680, lon:80.1780},
-  {name:"Alawwa", lat:7.2870, lon:80.2420},
-  {name:"Polgahawela", lat:7.3300, lon:80.3000},
-  {name:"Kurunegala", lat:7.4818, lon:80.3609},
-  {name:"Yaggapitiya", lat:7.4930, lon:80.3350},
-  {name:"Dambokka", lat:7.5000, lon:80.3850},
+  {name:"Mirigama", lat:7.2450, lon:80.1250, sinhala:"මීරිගම"},
+  {name:"Veyangoda", lat:7.1560, lon:80.0970, sinhala:"වේයන්ගොඩ"},
+  {name:"Nittambuwa", lat:7.1440, lon:80.0960, sinhala:"නිට්ටඹුව"},
+  {name:"Pallewela", lat:7.2450, lon:80.0750, sinhala:"පල්ලෙවෙල"},
+  {name:"Pannala", lat:7.3300, lon:80.0150, sinhala:"පන්නල"},
+  {name:"Kuliyapitiya", lat:7.4680, lon:80.0400, sinhala:"කූලියාපිටිය"},
+  {name:"Narammala", lat:7.4310, lon:80.2060, sinhala:"නාරම්මල"},
+  {name:"Dambadeniya", lat:7.3680, lon:80.1780, sinhala:"දඹදෙණිය"},
+  {name:"Alawwa", lat:7.2870, lon:80.2420, sinhala:"අලව්ව"},
+  {name:"Polgahawela", lat:7.3300, lon:80.3000, sinhala:"පොල්ගහවෙල"},
+  {name:"Kurunegala", lat:7.4818, lon:80.3609, sinhala:"කුරුණෑගල"},
+  {name:"Yaggapitiya", lat:7.4930, lon:80.3350, sinhala:"යග්ගපිටිය"},
+  {name:"Dambokka", lat:7.5000, lon:80.3850, sinhala:"දඹොක්ක"},
  // {name:"Kegalle", lat:7.2513, lon:80.3464},
  // {name:"Mawanella", lat:7.2520, lon:80.4460},
-  {name:"Kandy", lat:7.2906, lon:80.6337},
-  {name:"Matale", lat:7.4675, lon:80.6234},
-  {name:"Dambulla", lat:7.8600, lon:80.6510},
-  {name:"Anuradhapura", lat:8.3114, lon:80.4037},
-  {name:"Puttalam", lat:8.0362, lon:79.8283},
-  {name:"Chilaw", lat:7.5758, lon:79.7953},
+  {name:"Kandy", lat:7.2906, lon:80.6337, sinhala:"මහනුවර"},
+  {name:"Matale", lat:7.4675, lon:80.6234, sinhala:"මාතලේ"},
+  {name:"Dambulla", lat:7.8600, lon:80.6510, sinhala:"දඹුල්ල"},
+  {name:"Anuradhapura", lat:8.3114, lon:80.4037, sinhala:"අනුරාධපුර"},
+  {name:"Puttalam", lat:8.0362, lon:79.8283, sinhala:"පුත්තලම"},
+  {name:"Chilaw", lat:7.5758, lon:79.7953, sinhala:"හලාවත"},
 
   // E06 / Hambantota and south-eastern area
-  {name:"Hambantota", lat:6.1241, lon:81.1185},
-  {name:"Ambalantota", lat:6.1160, lon:81.0270,specialNote:
+  {name:"Hambantota", lat:6.1241, lon:81.1185, sinhala:"හම්බන්තොට"},
+  {name:"Ambalantota", lat:6.1160, lon:81.0270, sinhala:"අම්බලන්තොට",specialNote:
       "If you are entering from (katunayake IC-bedigama IC), kasagala IC is the nearest exit."},
-  {name:"Tissamaharama", lat:6.2840, lon:81.2860},
-  {name:"Kataragama", lat:6.4130, lon:81.3340},
-  {name:"Kirinda", lat:6.2210, lon:81.3390},
-  {name:"Weerawila", lat:6.2820, lon:81.2310},
-  {name:"Mattala", lat:6.2840, lon:81.1250},
-  {name:"Sooriyawewa", lat:6.308988, lon:81.002937},
-  {name:"Andarawewa", lat:6.3000, lon:81.1000},
-  {name:"Beliatta", lat:6.0480, lon:80.7350},
-  {name:"Tangalle", lat:6.0240, lon:80.7950},
-  {name:"Angunakolapelessa", lat:6.1620, lon:80.8990},
-  {name:"Walasmulla", lat:6.0850, lon:80.6940},
-  {name:"Embilipitiya", lat:6.3430, lon:80.8480},
-  {name:"Middeniya", lat:6.2670, lon:80.7670,specialNote:
+  {name:"Tissamaharama", lat:6.2840, lon:81.2860, sinhala:"තිස්සමහාරාම"},
+  {name:"Kataragama", lat:6.4130, lon:81.3340, sinhala:"කතරගම"},
+  {name:"Kirinda", lat:6.2210, lon:81.3390, sinhala:"කිරින්ද"},
+  {name:"Weerawila", lat:6.2820, lon:81.2310, sinhala:"වීරවිල"},
+  {name:"Mattala", lat:6.2840, lon:81.1250, sinhala:"මත්තල"},
+  {name:"Sooriyawewa", lat:6.308988, lon:81.002937, sinhala:"සූරියවැව"},
+  {name:"Andarawewa", lat:6.3000, lon:81.1000, sinhala:"අන්දරවැව"},
+  {name:"Beliatta", lat:6.0480, lon:80.7350, sinhala:"බෙලිඅත්ත"},
+  {name:"Tangalle", lat:6.0240, lon:80.7950, sinhala:"තංගල්ල"},
+  {name:"Angunakolapelessa", lat:6.1620, lon:80.8990, sinhala:"අඟුණකොළපැලැස්ස"},
+  {name:"Walasmulla", lat:6.0850, lon:80.6940, sinhala:"වලස්මුල්ල"},
+  {name:"Embilipitiya", lat:6.3430, lon:80.8480, sinhala:"ඇඹිලිපිටිය"},
+  {name:"Middeniya", lat:6.2670, lon:80.7670, sinhala:"මිද්දෙණිය",specialNote:
       "If you are entering from (katunayake IC-beliatta IC), Bedigama IC is the nearest exit."},
-  {name:"ridiyagama", lat:6.182878, lon:80.980957,specialNote:
+  {name:"ridiyagama", lat:6.182878, lon:80.980957, sinhala:"රිදියගම",specialNote:
       "If you are entering from (katunayake IC-bedigama IC), kasagala IC is the nearest exit."},
-  {name:"Hungama", lat:6.114758, lon:80.929818},
+  {name:"Hungama", lat:6.114758, lon:80.929818, sinhala:"හංගම"},
 
   // Other major Sri Lankan cities
-  {name:"Avissawella", lat:6.9540, lon:80.2060},
-  {name:"Hanwella", lat:6.9060, lon:80.0830,specialNote:
+  {name:"Avissawella", lat:6.9540, lon:80.2060, sinhala:"අවිස්සාවේල්ල"},
+  {name:"Hanwella", lat:6.9060, lon:80.0830, sinhala:"හංවැල්ල",specialNote:
       "If you are entering from (katunayake IC-kadawatha IC), kaduwela IC is the nearest exit.If you are entering from (kahathuduwa IC-Magampura IC),kottawa IC is the nearest."},
   //{name:"Mount Lavinia", lat:6.8380, lon:79.8630},
-  {name:"Wariyapola", lat:7.6280, lon:80.2350},
-  {name:"Nikaweratiya", lat:7.7470, lon:80.1150},
-  {name:"Wennappuwa", lat:7.3500, lon:79.8500},
+  {name:"Wariyapola", lat:7.6280, lon:80.2350, sinhala:"වාරියපොළ"},
+  {name:"Nikaweratiya", lat:7.7470, lon:80.1150, sinhala:"නිකවැරටිය"},
+  {name:"Wennappuwa", lat:7.3500, lon:79.8500, sinhala:"වෙන්නප්පුව"},
   //{name:"Ratnapura", lat:6.6828, lon:80.3992},
   //{name:"Deniyaya", lat:6.3400, lon:80.5600},
-  {name:"Polonnaruwa", lat:7.9403, lon:81.0188},
-  {name:"Habarana", lat:8.0360, lon:80.7510},
-  {name:"Kekirawa", lat:8.0370, lon:80.5950},
-  {name:"Mannar", lat:8.9810, lon:79.9040},
- 
+  {name:"Polonnaruwa", lat:7.9403, lon:81.0188, sinhala:"පොළොන්නරුව"},
+  {name:"Habarana", lat:8.0360, lon:80.7510, sinhala:"හබරණ"},
+  {name:"Kekirawa", lat:8.0370, lon:80.5950, sinhala:"කැකිරාව"},
+  {name:"Mannar", lat:8.9810, lon:79.9040, sinhala:"මන්නාරම"},
   
   
   
-  {name:"Weeraketiya", lat:6.1476, lon:80.7634,specialNote:
+  
+  {name:"Weeraketiya", lat:6.1476, lon:80.7634, sinhala:"වීරකැටිය",specialNote:
       "If you are entering from Mattala direction Kasagala IC is the nearest exit."},
-{name:"Mirissa", lat:5.9480, lon:80.4590,specialNote:
+{name:"Mirissa", lat:5.9480, lon:80.4590, sinhala:"මිරිස්ස",specialNote:
       "If you are entering from Katunayake direction Kokmaduwa IC is the nearest exit."},
-{name:"Telijjawila", lat:6.024307, lon:80.501292},
-{name:"Ahangama", lat:5.9735, lon:80.3623},
-{name:"Koggala", lat:5.9890, lon:80.3290},
-{name:"Unawatuna", lat:6.0100, lon:80.2490},
-{name:"Sinigama", lat:6.1390, lon:80.1020,specialNote:
+{name:"Telijjawila", lat:6.024307, lon:80.501292, sinhala:"තෙලිජ්ජවිල"},
+{name:"Ahangama", lat:5.9735, lon:80.3623, sinhala:"අහංගම"},
+{name:"Koggala", lat:5.9890, lon:80.3290, sinhala:"කොග්ගල"},
+{name:"Unawatuna", lat:6.0100, lon:80.2490, sinhala:"උණවටුන"},
+{name:"Sinigama", lat:6.1390, lon:80.1020, sinhala:"සීනිගම",specialNote:
       "If you are entering from Katunayake direction Kurudugaha IC is the best option."},
-{name:"Balapitiya", lat:6.2806, lon:80.0406},
-{name:"Ahungalla", lat:6.3138, lon:80.0351,specialNote:
+{name:"Balapitiya", lat:6.2806, lon:80.0406, sinhala:"බලපිටිය"},
+{name:"Ahungalla", lat:6.3138, lon:80.0351, sinhala:"අහුන්ගල්ල",specialNote:
       "If you are entering from Katunayake direction Welipenna IC is the nearest exit."},
-{name:"Kosgoda", lat:6.3386, lon:80.0289,specialNote:
+{name:"Kosgoda", lat:6.3386, lon:80.0289, sinhala:"කොස්ගොඩ",specialNote:
       "If you are entering from Katunayake direction Welipenna IC is the nearest exit."},
-{name:"Induruwa", lat:6.3739, lon:80.0106},
-{name:"Beruwala", lat:6.4667, lon:79.9833,specialNote:
+{name:"Induruwa", lat:6.3739, lon:80.0106, sinhala:"ඉඳුරුව"},
+{name:"Beruwala", lat:6.4667, lon:79.9833, sinhala:"බේරුවල",specialNote:
       "If you are entering from Mattala direction Welipenna IC is the nearest exit."},
-{name:"Katukurunda", lat:6.5687, lon:79.9892},
-{name:"Waskaduwa", lat:6.6110, lon:79.9520,specialNote:
+{name:"Katukurunda", lat:6.5687, lon:79.9892, sinhala:"කටුකුරුන්ද"},
+{name:"Waskaduwa", lat:6.6110, lon:79.9520, sinhala:"වස්කඩුව",specialNote:
       "If you are entering from Katunayake direction Gelanigama IC is the nearest exit."},
 //{name:"Bulathsinhala", lat:6.6499, lon:80.1780},
-{name:"Padukka", lat:6.8415, lon:80.0916}
+{name:"Padukka", lat:6.8415, lon:80.0916, sinhala:"පාදුක්ක"}
 
 ];
 
@@ -1953,6 +1951,7 @@ function populateExitSelect() {
 }
 
 
+
 function searchCities() {
 
   const input =
@@ -1972,9 +1971,10 @@ function searchCities() {
   const matches =
     cities
       .filter(c =>
-        c.name.toLowerCase().includes(query)
+        c.name.toLowerCase().includes(query) ||
+        (c.sinhala && c.sinhala.includes(query))
       )
-      .slice(0,8);
+      .slice(0, 8);
 
   if (!matches.length) {
 
@@ -1988,23 +1988,32 @@ function searchCities() {
 
   suggestions.innerHTML =
     matches.map(c => `
-      <div
-        class="city-suggestion"
-        onclick="selectCity('${escapeHtml(c.name)}')"
-      >
-        ${escapeHtml(c.name)}
-      </div>
-    `).join("");
+  <div
+    class="city-suggestion"
+    onclick="selectCity('${escapeHtml(c.name)}')"
+  >
+    ${query.match(/[\u0D80-\u0DFF]/)
+      ? escapeHtml(c.sinhala || c.name)
+      : escapeHtml(c.name)}
+  </div>
+`).join("");
 }
 
 
-function selectCity(name) {
+function selectCity(name, sinhala) {
 
-  document.getElementById("citySearch").value = name;
+  const input = document.getElementById("citySearch");
+
+  const query = input.value.trim();
+
+  if (/[\u0D80-\u0DFF]/.test(query)) {
+    input.value = sinhala || name;
+  } else {
+    input.value = name;
+  }
 
   document.getElementById("citySuggestions").innerHTML = "";
 }
-
 
 function escapeHtml(s) {
 
@@ -2017,7 +2026,6 @@ function escapeHtml(s) {
   }[m]));
 
 }
-
 
 /*
 ============================================================
