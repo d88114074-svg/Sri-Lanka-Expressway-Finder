@@ -144,14 +144,14 @@
     header {
       background:linear-gradient(135deg,var(--primary),#083b9a);
       color:#fff;
-      padding:22px 18px 24px;
+      padding:12px 18px 14px;
       border-radius:0 0 22px 22px;
 	  text-align:center;
     }
 
     header h1 {
       margin:0 0 6px;
-      font-size:40px;
+      font-size:30px;
       line-height:1.15;
 	  
     }
@@ -659,6 +659,52 @@
 #disclaimerPopup.is-hidden {
   display: none;
 }
+
+.notice-bar {
+  width: 100%;
+  overflow: hidden;
+  background: #0b5ed7;
+  color: white;
+  padding: 4px 4px 0 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+}
+
+/* Moving notice lines */
+.notice-text {
+  display: block;
+  width: max-content;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: noticeMove 15s linear infinite;
+  line-height: 28px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* First line color */
+.line1 {
+  color: yellow;
+  animation:noticeMove 20s linear infinite;
+}
+
+/* Second line color */
+.line2 {
+  color: white;
+animation:noticeMove 10s linear infinite;
+}
+
+/* Moving animation */
+@keyframes noticeMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
 </style>
 <div class="app">
 
@@ -678,6 +724,7 @@
         <option value="si">සිංහල</option>
       </select>
     </div>
+
   </header>
 
   <main>
@@ -686,6 +733,10 @@
     <section id="home" class="screen active">
 
     <div class="menu-grid">
+<div class="notice-bar">
+  <div class="notice-text line1" id="noticeBar1"></div>
+  <div class="notice-text line2" id="noticeBar2"></div>
+</div>
 
   <!-- 1. TOLL CHARGE -->
   <button class="menu-btn" onclick="showScreen('tollScreen')">
@@ -2870,7 +2921,18 @@ function calculateToll() {
 LANGUAGE
 ============================================================
 */
+// informtion Alert
+const noticeTexts = {
+  en: {
+    line1: "SAFETY NOTICE: * WEAR SEAT BELTS *** MAX SPEED 100 km/h *** IN RAIN, MAINTAIN 60 km/h *** DON'T DRINK AND DRIVE..",
+    line2: "Please drive safely and follow expressway regulations."
+  },
 
+  si: {
+    line1: "ආරක්ෂිත රිය ධාවන දැනුම්දීම: * ආසන පටි පළඳින්න *** උපරිම වේගය පැයට කි.මී. 100 *** වැසි අවස්ථාවල පැයට කි.මී. 60 වේගයක් පවත්වා ගන්න * මත්පැන් පානය කර රිය ධාවනය නොකරන්න",
+    line2: "කරුණාකර ආරක්ෂිතව රිය ධාවනය කර අධිවේගී මාර්ග නීති පිළිපදින්න."
+  }
+};
 const text = {
 
   en: {
@@ -3102,6 +3164,13 @@ function setLanguage(lang) {
     lang === "si"
       ? "si"
       : "en";
+      
+document.getElementById("noticeBar1").textContent =
+  noticeTexts[lang].line1;
+
+document.getElementById("noticeBar2").textContent =
+  noticeTexts[lang].line2;
+
 }
 
 
@@ -3176,6 +3245,16 @@ if ("serviceWorker" in navigator) {
     }
   });
 })();
+
+
+
+window.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("noticeBar1").textContent =
+    noticeTexts.en.line1;
+
+  document.getElementById("noticeBar2").textContent =
+    noticeTexts.en.line2;
+});
 </script>
 </body>
 </html>
