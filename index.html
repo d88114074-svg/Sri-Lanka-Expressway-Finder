@@ -668,6 +668,7 @@
   padding: 4px 4px 0 0;
   box-sizing: border-box;
   border-radius: 8px;
+  margin-bottom: 10px;
 
 }
 
@@ -729,14 +730,16 @@ animation:noticeMove 10s linear infinite;
 
   <main>
 
+	  <div class="notice-bar">
+  <div class="notice-text line1" id="noticeBar1"></div>
+  <div class="notice-text line2" id="noticeBar2"></div>
+</div>
+
     <!-- HOME -->
     <section id="home" class="screen active">
 
     <div class="menu-grid">
-<div class="notice-bar">
-  <div class="notice-text line1" id="noticeBar1"></div>
-  <div class="notice-text line2" id="noticeBar2"></div>
-</div>
+
 
   <!-- 1. TOLL CHARGE -->
   <button class="menu-btn" onclick="showScreen('tollScreen')">
