@@ -1364,20 +1364,29 @@ const vehicleCategories = {
 
   "1": {
     name: "Category 1",
+    nameSi: "කාණ්ඩය 1",
     notice:
-      "All vehicles with 2 axles and 4 wheels or dual purpose vehiles With two axles and six wheels (Ex- Car,van,cabs etc)."
+      "All vehicles with 2 axles and 4 wheels or dual purpose vehicles with two axles and six wheels (Ex- Car, van, cabs etc).",
+    noticeSi:
+      "අක්ෂ 2ක් සහ රෝද 4ක් සහිත සියලුම වාහන හෝ අක්ෂ 2ක් සහ රෝද 6ක් සහිත ද්විත්ව කාර්ය වාහන (උදා: කාර්, වෑන්, කැබ් රථ ආදිය)."
   },
 
   "2": {
     name: "Category 2",
+    nameSi: "කාණ්ඩය 2",
     notice:
-      "All vehicles with 6 wheels and 2 axles( Ex-Lorry,Bus)."
+      "All vehicles with 6 wheels and 2 axles (Ex- Lorry, Bus).",
+    noticeSi:
+      "අක්ෂ 2ක් සහ රෝද 6ක් සහිත සියලුම වාහන (උදා: ලොරි, බස් රථ)."
   },
 
   "3": {
     name: "Category 3",
+    nameSi: "කාණ්ඩය 3",
     notice:
-      "All vehicles with 3 or more axles (Ex- Motorcoach,Prime Mover,Tipper etc)."
+      "All vehicles with 3 or more axles (Ex- Motorcoach, Prime Mover, Tipper etc).",
+    noticeSi:
+      "අක්ෂ 3ක් හෝ ඊට වැඩි ගණනක් සහිත සියලුම වාහන (උදා: මෝටර් කෝච්, ප්‍රයිම් මුවර්, ටිපර් ආදිය)."
   }
 
 };
@@ -2733,14 +2742,29 @@ function showVehicleCategoryNotice() {
     return;
   }
 
+  const lang =
+    document.documentElement.lang === "si"
+      ? "si"
+      : "en";
+
+  const categoryName =
+    lang === "si"
+      ? data.nameSi
+      : data.name;
+
+  const notice =
+    lang === "si"
+      ? data.noticeSi
+      : data.notice;
+
   box.innerHTML = `
     <div class="category-note category-${category}">
 
       <div class="category-note-title">
-        🚗 ${escapeHtml(data.name)} — Vehicles
+        🚗 ${escapeHtml(categoryName)} — ${lang === "si" ? "වාහන" : "Vehicles"}
       </div>
 
-      ${escapeHtml(data.notice)}
+      ${escapeHtml(notice)}
 
     </div>
   `;
@@ -3173,6 +3197,8 @@ document.getElementById("noticeBar1").textContent =
 
 document.getElementById("noticeBar2").textContent =
   noticeTexts[lang].line2;
+
+	showVehicleCategoryNotice();
 
 }
 
