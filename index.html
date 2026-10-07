@@ -1242,26 +1242,34 @@ const cities = [
   // E02 Outer Circular Expressway and nearby cities
   {name:"Wattala", lat:6.9900, lon:79.8910, sinhala:"වත්තල",extraExits:["e02-kerawalapitiya"]},
   {name:"Ja-Ela", lat:7.0740, lon:79.8910, sinhala:"ජා-ඇල"},
-  {name:"Kandana", lat:7.0480, lon:79.8950, sinhala:"කඳාන",specialNote:
-      "If you are entering from katunayake IC, Ja-Ela IC is the nearest exit."},
-  {name:"Ragama", lat:7.0290, lon:79.9170, sinhala:"රාගම",specialNote:
-      "If you are entering from (kaduwela IC - Magampura IC), Kadawatha IC is the nearest exit."},
-  {name:"Walisara", lat:7.0130, lon:79.8870, sinhala:"වත්තල"},
+  {name:"Kandana", lat:7.0480, lon:79.8950, sinhala:"කඳාන",extraExits:["e03-katana"]},  
+	{name:"Ragama", lat:7.0290, lon:79.9170, sinhala:"රාගම",
+  extraExits:[
+    "e02-kadawatha"
+  ]},
+  {name:"Walisara", lat:7.0130, lon:79.8870, sinhala:"වැලිසර"},
   {name:"Kelaniya", lat:6.9550, lon:79.9220, sinhala:"කැලණිය"},
   {name:"Peliyagoda", lat:6.9600, lon:79.8780, sinhala:"පෑලියගොඩ"},
   {name:"Kadawatha", lat:7.0010, lon:79.9540, sinhala:"කඩවත"},
-  {name:"Kiribathgoda", lat:6.979073, lon:79.928164, sinhala:"කිරිබත්ගොඩ",specialNote:
-      "If you are entering from southern direction Kadawatha IC is the nearest exit."},
-  {name:"Biyagama", lat:6.9450, lon:80.0020, sinhala:"බියගම"},
+  {name:"Kiribathgoda", lat:6.979073, lon:79.928164, sinhala:"කිරිබත්ගොඩ",
+  extraExits:[
+    "e02-kadawatha"
+  ]},
+	{name:"Biyagama", lat:6.9450, lon:80.0020, sinhala:"බියගම"},
   {name:"Malabe", lat:6.904099, lon:79.954544, sinhala:"මාලබේ"},
-  {name:"Kaduwela", lat:6.935712, lon:79.983719, sinhala:"කඩුවෙල",specialNote:
-      "If you are entering from southern direction, Kothalawala IC is the nearest exit."},
+  {name:"Kaduwela", lat:6.935712, lon:79.983719, sinhala:"කඩුවෙල",
+  extraExits:[
+    "e02-kothalawala"
+  ]},
   {name:"Battaramulla", lat:6.9000, lon:79.9180, sinhala:"බත්තරමුල්ල"},
   {name:"Athurugiriya", lat:6.8720, lon:79.9970, sinhala:"අතුරුගිරිය"},
   {name:"Kohuwala", lat:6.8660, lon:79.9010, sinhala:"කොහුවල"},
-  {name:"Dehiwala", lat:6.8520, lon:79.8650, sinhala:"දෙහිවල",specialNote:
-      "If you are entering from katunayake direction, Peliyagoda IC is the nearest exit.If you are entering from mattala direction,Kahathuduwa IC is the nearest exit"},
-  {name:"Nugegoda", lat:6.8720, lon:79.8890, sinhala:"නුගේගොඩ"},
+  {name:"Dehiwala", lat:6.8520, lon:79.8650, sinhala:"දෙහිවල",
+  extraExits:[
+    "e03-peliyagoda",
+    "e01-kahathuduwa"
+  ]},
+	{name:"Nugegoda", lat:6.8720, lon:79.8890, sinhala:"නුගේගොඩ",extraExits:["e01-kottawa"] },
 
   // E03 Colombo-Katunayake Expressway and nearby cities
   {name:"Grandpass", lat:6.9510, lon:79.8680, sinhala:"ග්‍රෑන්ඩ්පාස්"},
