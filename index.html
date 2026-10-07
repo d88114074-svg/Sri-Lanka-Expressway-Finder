@@ -1216,17 +1216,13 @@ const cities = [
   lat:6.5854,
   lon:79.9607,
   sinhala:"කළුතර",
-  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-	 extraExits:[
+  extraExits:[
     "e01-gelanigama"
      ]
 },
 	{name:"Wadduwa", lat:6.6680, lon:79.9230, sinhala:"වාද්දුව"},
   {name:"Matugama", lat:6.5230, lon:80.1140, sinhala:"මතුගම",
-   specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-	 extraExits:[
+   extraExits:[
     "e01-welipenna"
      ]
 },
@@ -2455,6 +2451,10 @@ CITY → NEAREST EXIT
 ============================================================
 */
 
+	const commonSpecialNote = {
+  en: "There are several expressway exits for this area. Please choose the nearest exit to you from below.",
+  si: "මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න."
+};
 function findExitsFromCity() {
 
   const cityName =
@@ -2537,29 +2537,27 @@ function findExitsFromCity() {
     </h2>
 
     ${
-  (document.documentElement.lang === "si"
-    ? city.specialNoteSi
-    : city.specialNote)
-  ? `
-    <div class="special-note">
+  city.extraExits && city.extraExits.length > 0
+    ? `
+      <div class="special-note">
 
-      <div class="special-note-title">
-        ⚠️ ${
+        <div class="special-note-title">
+          ⚠️ ${
+            document.documentElement.lang === "si"
+              ? "විශේෂ දැනුම්දීමයි!"
+              : "Special Notice!"
+          }
+        </div>
+
+        ${escapeHtml(
           document.documentElement.lang === "si"
-            ? "විශේෂ දැනුම්දීමයි"
-            : "Special Notice"
-        }
+            ? commonSpecialNote.si
+            : commonSpecialNote.en
+        )}
+
       </div>
-
-      ${escapeHtml(
-        document.documentElement.lang === "si"
-          ? city.specialNoteSi
-          : city.specialNote
-      )}
-
-    </div>
-  `
-  : ""
+    `
+    : ""
 }
     ${exitCard(nearest)}
 
