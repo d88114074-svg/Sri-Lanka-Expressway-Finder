@@ -1219,8 +1219,7 @@ const cities = [
   lon:79.9607,
   sinhala:"කළුතර",
   specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-	  extraExits:[
+  extraExits:[
     "e01-gelanigama",
     "e01-dodangoda"
   ]
@@ -1315,19 +1314,9 @@ specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේ�
 
   // E06 / Hambantota and south-eastern area
   {name:"Hambantota", lat:6.1241, lon:81.1185, sinhala:"හම්බන්තොට"},
-{
-  name:"Ambalantota",
-  lat:6.1160,
-  lon:81.0270,
-  sinhala:"අම්බලන්තොට",
-  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-  specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-  extraExits:[
-    "e01-bedigama",
-    "e01-kasagala"
-  ]
-},
-	{name:"Tissamaharama", lat:6.2840, lon:81.2860, sinhala:"තිස්සමහාරාම"},
+  {name:"Ambalantota", lat:6.1160, lon:81.0270, sinhala:"අම්බලන්තොට",specialNote:
+      "If you are entering from (katunayake IC-bedigama IC), kasagala IC is the nearest exit."},
+  {name:"Tissamaharama", lat:6.2840, lon:81.2860, sinhala:"තිස්සමහාරාම"},
   {name:"Kataragama", lat:6.4130, lon:81.3340, sinhala:"කතරගම"},
   {name:"Kirinda", lat:6.2210, lon:81.3390, sinhala:"කිරින්ද"},
   {name:"Weerawila", lat:6.2820, lon:81.2310, sinhala:"වීරවිල"},
@@ -1339,47 +1328,17 @@ specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේ�
   {name:"Angunakolapelessa", lat:6.1620, lon:80.8990, sinhala:"අඟුණකොළපැලැස්ස"},
   {name:"Walasmulla", lat:6.0850, lon:80.6940, sinhala:"වලස්මුල්ල"},
   {name:"Embilipitiya", lat:6.3430, lon:80.8480, sinhala:"ඇඹිලිපිටිය"},
-  {
-  name:"Middeniya",
-  lat:6.2670,
-  lon:80.7670,
-  sinhala:"මිද්දෙණිය",
-  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-  specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-  extraExits:[
-    "e01-bedigama",
-    "e01-kasagala"
-  ]
-},
-	{
-  name:"ridiyagama",
-  lat:6.182878,
-  lon:80.980957,
-  sinhala:"රිදියගම",
-  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-  specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-  extraExits:[
-    "e01-kasagala",
-    "e01-agunukolapelessa"
-  ]
-},
-	{name:"Hungama", lat:6.114758, lon:80.929818, sinhala:"හංගම"},
+  {name:"Middeniya", lat:6.2670, lon:80.7670, sinhala:"මිද්දෙණිය",specialNote:
+      "If you are entering from (katunayake IC-beliatta IC), Bedigama IC is the nearest exit."},
+  {name:"ridiyagama", lat:6.182878, lon:80.980957, sinhala:"රිදියගම",specialNote:
+      "If you are entering from (katunayake IC-bedigama IC), kasagala IC is the nearest exit."},
+  {name:"Hungama", lat:6.114758, lon:80.929818, sinhala:"හංගම"},
 
   // Other major Sri Lankan cities
   {name:"Avissawella", lat:6.9540, lon:80.2060, sinhala:"අවිස්සාවේල්ල"},
-  {
-  name:"Hanwella",
-  lat:6.9060,
-  lon:80.0830,
-  sinhala:"හංවැල්ල",
-  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-  specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-  extraExits:[
-    "e02-kaduwela",
-    "e01-kottawa"
-  ]
-},
-	//{name:"Mount Lavinia", lat:6.8380, lon:79.8630},
+  {name:"Hanwella", lat:6.9060, lon:80.0830, sinhala:"හංවැල්ල",specialNote:
+      "If you are entering from (katunayake IC-kadawatha IC), kaduwela IC is the nearest exit.If you are entering from (kahathuduwa IC-Magampura IC),kottawa IC is the nearest."},
+  //{name:"Mount Lavinia", lat:6.8380, lon:79.8630},
   {name:"Wariyapola", lat:7.6280, lon:80.2350, sinhala:"වාරියපොළ"},
   {name:"Nikaweratiya", lat:7.7470, lon:80.1150, sinhala:"නිකවැරටිය"},
   {name:"Wennappuwa", lat:7.3500, lon:79.8500, sinhala:"වෙන්නප්පුව"},
@@ -1393,19 +1352,9 @@ specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේ�
   
   
   
-  {
-  name:"Weeraketiya",
-  lat:6.1476,
-  lon:80.7634,
-  sinhala:"වීරකැටිය",
-  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-  specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
-  extraExits:[
-    "e01-kasagala",
-    "e01-bedigama"
-  ]
-},
-	{name:"Mirissa", lat:5.9480, lon:80.4590, sinhala:"මිරිස්ස",specialNote:
+  {name:"Weeraketiya", lat:6.1476, lon:80.7634, sinhala:"වීරකැටිය",specialNote:
+      "If you are entering from Mattala direction Kasagala IC is the nearest exit."},
+{name:"Mirissa", lat:5.9480, lon:80.4590, sinhala:"මිරිස්ස",specialNote:
       "If you are entering from Katunayake direction Kokmaduwa IC is the nearest exit."},
 {name:"Telijjawila", lat:6.024307, lon:80.501292, sinhala:"තෙලිජ්ජවිල"},
 {name:"Ahangama", lat:5.9735, lon:80.3623, sinhala:"අහංගම"},
@@ -2584,31 +2533,42 @@ function findExitsFromCity() {
       ${escapeHtml(city.name)}
     </h2>
 
-    ${
-  (document.documentElement.lang === "si"
-    ? city.specialNoteSi
-    : city.specialNote)
-  ? `
-    <div class="special-note">
+    ${city.specialNote ? `
+      <div class="special-note">
 
-      <div class="special-note-title">
-        ⚠️ ${
-          document.documentElement.lang === "si"
-            ? "විශේෂ නගර දැනුම්දීම"
-            : "Special City Notice"
-        }
+        <div class="special-note-title">
+          ⚠️ Special City Notice
+        </div>
+
+        ${escapeHtml(city.specialNote)}
+
       </div>
+    ` : ""}
 
-      ${escapeHtml(
-        document.documentElement.lang === "si"
-          ? city.specialNoteSi
-          : city.specialNote
-      )}
+    ${exitCard(nearest)}
 
-    </div>
-  `
-  : ""
-}
+    ${
+      extraExits.length > 0
+        ? `
+          <div class="extra-exits">
+
+            <div class="extra-exits-title">
+              🛣️ Other Recommended Exits
+            </div>
+
+            <div class="extra-exits-list">
+
+              ${extraExits
+                .map(e => exitCard(e))
+                .join("")
+              }
+
+            </div>
+
+          </div>
+        `
+        : ""
+    }
 
   `;
 
