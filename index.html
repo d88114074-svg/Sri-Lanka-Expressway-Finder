@@ -1090,9 +1090,7 @@ const expressways = [
 
       { id:"e01-kahathuduwa", name:"Kahathuduwa IC", lat:6.784504, lon:79.980489 },
 
-      { id:"e01-gelanigama", name:"Gelanigama IC", lat:6.718072, lon:80.000064 },
-
-      { id:"e01-dodangoda", name:"Dodangoda IC", lat:6.541871, lon:80.043821 },
+      {id:"e01-gelanigama", name:"Gelanigama IC", sinhala:"ගැලනිගම අන්තර් හුවමාරුව", lat:6.718072, lon:80.000064},      { id:"e01-dodangoda", name:"Dodangoda IC", lat:6.541871, lon:80.043821 },
 
       { id:"e01-welipenna", name:"Welipenna IC", lat:6.453046, lon:80.089288 },
 
@@ -2599,8 +2597,12 @@ function exitCard(e) {
       </span>
 
       <h3>
-        ${escapeHtml(e.name)}
-      </h3>
+  ${escapeHtml(
+    document.documentElement.lang === "si"
+      ? (e.sinhala || e.name)
+      : e.name
+  )}
+</h3>
 
       <div class="small">
         ${escapeHtml(e.expresswayName)}
