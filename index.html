@@ -1219,7 +1219,8 @@ const cities = [
   lon:79.9607,
   sinhala:"කළුතර",
   specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
-  extraExits:[
+specialNoteSi:"මෙම ප්‍රදේශය සඳහා අධිවේගී මාර්ග පිවිසුම් කිහිපයක් ඇත. කරුණාකර පහතින් ඔබට ආසන්නතම පිවිසුම තෝරන්න.",
+	 extraExits:[
     "e01-gelanigama",
     "e01-dodangoda"
   ]
@@ -2533,18 +2534,31 @@ function findExitsFromCity() {
       ${escapeHtml(city.name)}
     </h2>
 
-    ${city.specialNote ? `
-      <div class="special-note">
+    ${
+  (document.documentElement.lang === "si"
+    ? city.specialNoteSi
+    : city.specialNote)
+  ? `
+    <div class="special-note">
 
-        <div class="special-note-title">
-          ⚠️ Special City Notice
-        </div>
-
-        ${escapeHtml(city.specialNote)}
-
+      <div class="special-note-title">
+        ⚠️ ${
+          document.documentElement.lang === "si"
+            ? "විශේෂ නගර දැනුම්දීම"
+            : "Special City Notice"
+        }
       </div>
-    ` : ""}
 
+      ${escapeHtml(
+        document.documentElement.lang === "si"
+          ? city.specialNoteSi
+          : city.specialNote
+      )}
+
+    </div>
+  `
+  : ""
+}
     ${exitCard(nearest)}
 
     ${
