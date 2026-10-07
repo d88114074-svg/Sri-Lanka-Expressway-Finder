@@ -397,6 +397,33 @@
       line-height:1.5;
       color:#664d03;
     }
+	  .extra-exits {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f5f9ff;
+  border: 1px solid #cfe0ff;
+}
+
+.extra-exits-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #0b5ed7;
+}
+
+.extra-exits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.extra-exit-item {
+  padding: 8px 10px;
+  background: white;
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+  font-weight: 500;
+}
 
     .special-note-title {
       font-weight:700;
@@ -1188,9 +1215,18 @@ const cities = [
   {name:"Horana", lat:6.7150, lon:80.0630, sinhala:"හොරණ"},
   {name:"Bandaragama", lat:6.7140, lon:79.9870, sinhala:"බණ්ඩාරගම"},
   {name:"Ingiriya", lat:6.7380, lon:80.1780, sinhala:"ඉංගිරිය"},
-  {name:"Kalutara", lat:6.5854, lon:79.9607, sinhala:"කළුතර",specialNote:
-      "If you are entering from katunayake direction, gelanigama IC is the nearest exit."},
-  {name:"Wadduwa", lat:6.6680, lon:79.9230, sinhala:"වාද්දුව"},
+  {
+  name:"Kalutara",
+  lat:6.5854,
+  lon:79.9607,
+  sinhala:"කළුතර",
+  specialNote:"There are several expressway exits for this area. Please choose the nearest exit to you from below.",
+  extraExits:[
+    "e01-gelanigama",
+    "e01-dodangoda"
+  ]
+},
+	{name:"Wadduwa", lat:6.6680, lon:79.9230, sinhala:"වාද්දුව"},
   {name:"Matugama", lat:6.5230, lon:80.1140, sinhala:"මතුගම",specialNote:
       "If you are entering from mattala direction, Welipenna IC is the nearest exit."},
   {name:"Gelanigama", lat:6.6900, lon:79.9790, sinhala:"ගැලනිගම"},
@@ -2234,21 +2270,71 @@ SPECIAL IC NOTE
 
 function specialNoteHtml(exit) {
 
-  if (!exit || !exit.specialNote) {
+  if (!exit || (!exit.specialNote && !exit.extraExits)) {
     return "";
   }
 
-  return `
-    <div class="special-note">
+  let html = "";
 
-      <div class="special-note-title">
-        ⚠️ Special IC Notice
+  if (exit.specialNote) {
+    html += `
+      <div class="special-note">
+
+        <div class="special-note-title">
+          ⚠️ Special City Notice
+        </div>
+
+        ${escapeHtml(exit.specialNote)}
+
       </div>
+    `;
+  }
 
-      ${escapeHtml(exit.specialNote)}
+  if (exit.extraExits && exit.extraExits.length > 0) {
 
-    </div>
-  `;
+    html += `
+      <div class="extra-exits">
+
+        <div class="extra-exits-title">
+          🛣️ Expressway Exits
+        </div>
+
+        <div class="extra-exits-list">
+    `;
+
+    exit.extraExits.forEach(exitId => {
+
+      let ic = null;
+
+      for (const road of expressways) {
+
+        const found =
+          road.exits.find(e => e.id === exitId);
+
+        if (found) {
+          ic = found;
+          break;
+        }
+
+      }
+
+      if (ic) {
+        html += `
+          <div class="extra-exit-item">
+            ${escapeHtml(ic.name)}
+          </div>
+        `;
+      }
+
+    });
+
+    html += `
+        </div>
+      </div>
+    `;
+  }
+
+  return html;
 }
 
 
@@ -2395,7 +2481,7 @@ function findExitsFromCity() {
     return;
   }
 
-  const nearest =
+  const results =
     allExits
       .map(e => ({
         ...e,
@@ -2407,7 +2493,37 @@ function findExitsFromCity() {
             e.lon
           )
       }))
-      .sort((a,b) => a.distance - b.distance)[0];
+      .sort((a,b) => a.distance - b.distance);
+
+  const nearest = results[0];
+
+  let extraExits = [];
+
+  if (city.extraExits) {
+
+    city.extraExits.forEach(exitId => {
+
+      const found =
+        allExits.find(e => e.id === exitId);
+
+      if (found) {
+
+        extraExits.push({
+          ...found,
+          distance:
+            distanceKm(
+              city.lat,
+              city.lon,
+              found.lat,
+              found.lon
+            )
+        });
+
+      }
+
+    });
+
+  }
 
   content.innerHTML = `
 
@@ -2432,6 +2548,29 @@ function findExitsFromCity() {
     ` : ""}
 
     ${exitCard(nearest)}
+
+    ${
+      extraExits.length > 0
+        ? `
+          <div class="extra-exits">
+
+            <div class="extra-exits-title">
+              🛣️ Other Recommended Exits
+            </div>
+
+            <div class="extra-exits-list">
+
+              ${extraExits
+                .map(e => exitCard(e))
+                .join("")
+              }
+
+            </div>
+
+          </div>
+        `
+        : ""
+    }
 
   `;
 
