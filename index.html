@@ -1308,25 +1308,22 @@ const cities = [
 
   // E06 / Hambantota and south-eastern area
   {name:"Hambantota", lat:6.1241, lon:81.1185, sinhala:"හම්බන්තොට"},
-  {name:"Ambalantota", lat:6.1160, lon:81.0270, sinhala:"අම්බලන්තොට",specialNote:
-      "If you are entering from (katunayake IC-bedigama IC), kasagala IC is the nearest exit."},
-  {name:"Tissamaharama", lat:6.2840, lon:81.2860, sinhala:"තිස්සමහාරාම"},
-  {name:"Kataragama", lat:6.4130, lon:81.3340, sinhala:"කතරගම"},
-  {name:"Kirinda", lat:6.2210, lon:81.3390, sinhala:"කිරින්ද"},
-  {name:"Weerawila", lat:6.2820, lon:81.2310, sinhala:"වීරවිල"},
-  {name:"Mattala", lat:6.2840, lon:81.1250, sinhala:"මත්තල"},
-  {name:"Sooriyawewa", lat:6.308988, lon:81.002937, sinhala:"සූරියවැව"},
-  {name:"Andarawewa", lat:6.3000, lon:81.1000, sinhala:"අන්දරවැව"},
-  {name:"Beliatta", lat:6.0480, lon:80.7350, sinhala:"බෙලිඅත්ත"},
-  {name:"Tangalle", lat:6.0240, lon:80.7950, sinhala:"තංගල්ල"},
-  {name:"Angunakolapelessa", lat:6.1620, lon:80.8990, sinhala:"අඟුණකොළපැලැස්ස"},
-  {name:"Walasmulla", lat:6.0850, lon:80.6940, sinhala:"වලස්මුල්ල"},
-  {name:"Embilipitiya", lat:6.3430, lon:80.8480, sinhala:"ඇඹිලිපිටිය"},
-  {name:"Middeniya", lat:6.2670, lon:80.7670, sinhala:"මිද්දෙණිය",specialNote:
-      "If you are entering from (katunayake IC-beliatta IC), Bedigama IC is the nearest exit."},
-  {name:"ridiyagama", lat:6.182878, lon:80.980957, sinhala:"රිදියගම",specialNote:
-      "If you are entering from (katunayake IC-bedigama IC), kasagala IC is the nearest exit."},
-  {name:"Hungama", lat:6.114758, lon:80.929818, sinhala:"හංගම"},
+{name:"Ambalantota", lat:6.1160, lon:81.0270, sinhala:"අම්බලන්තොට",extraExits:["e01-bedigama","e01-kasagala"]},
+{name:"Tissamaharama", lat:6.2840, lon:81.2860, sinhala:"තිස්සමහාරාම"},
+{name:"Kataragama", lat:6.4130, lon:81.3340, sinhala:"කතරගම"},
+{name:"Kirinda", lat:6.2210, lon:81.3390, sinhala:"කිරින්ද"},
+{name:"Weerawila", lat:6.2820, lon:81.2310, sinhala:"වීරවිල"},
+{name:"Mattala", lat:6.2840, lon:81.1250, sinhala:"මත්තල"},
+{name:"Sooriyawewa", lat:6.308988, lon:81.002937, sinhala:"සූරියවැව"},
+{name:"Andarawewa", lat:6.3000, lon:81.1000, sinhala:"අන්දරවැව"},
+{name:"Beliatta", lat:6.0480, lon:80.7350, sinhala:"බෙලිඅත්ත"},
+{name:"Tangalle", lat:6.0240, lon:80.7950, sinhala:"තංගල්ල"},
+{name:"Angunakolapelessa", lat:6.1620, lon:80.8990, sinhala:"අඟුණකොළපැලැස්ස"},
+{name:"Walasmulla", lat:6.0850, lon:80.6940, sinhala:"වලස්මුල්ල"},
+{name:"Embilipitiya", lat:6.3430, lon:80.8480, sinhala:"ඇඹිලිපිටිය"},
+{name:"Middeniya", lat:6.2670, lon:80.7670, sinhala:"මිද්දෙණිය",extraExits:["e01-beliatta","e01-bedigama"]},
+{name:"ridiyagama", lat:6.182878, lon:80.980957, sinhala:"රිදියගම",extraExits:["e01-bedigama","e01-kasagala"]},
+{name:"Hungama", lat:6.114758, lon:80.929818, sinhala:"හුංගම"},
 
   // Other major Sri Lankan cities
   {name:"Avissawella", lat:6.9540, lon:80.2060, sinhala:"අවිස්සාවේල්ල"},
@@ -1346,27 +1343,20 @@ const cities = [
   
   
   
-  {name:"Weeraketiya", lat:6.1476, lon:80.7634, sinhala:"වීරකැටිය",specialNote:
-      "If you are entering from Mattala direction Kasagala IC is the nearest exit."},
-{name:"Mirissa", lat:5.9480, lon:80.4590, sinhala:"මිරිස්ස",specialNote:
-      "If you are entering from Katunayake direction Kokmaduwa IC is the nearest exit."},
+{name:"Weeraketiya", lat:6.1476, lon:80.7634, sinhala:"වීරකැටිය",extraExits:["e01-kasagala","e01-bedigama"]},
+{name:"Mirissa", lat:5.9480, lon:80.4590, sinhala:"මිරිස්ස",extraExits:["e01-kokmaduwa","e01-imaduwa"]},
 {name:"Telijjawila", lat:6.024307, lon:80.501292, sinhala:"තෙලිජ්ජවිල"},
 {name:"Ahangama", lat:5.9735, lon:80.3623, sinhala:"අහංගම"},
 {name:"Koggala", lat:5.9890, lon:80.3290, sinhala:"කොග්ගල"},
 {name:"Unawatuna", lat:6.0100, lon:80.2490, sinhala:"උණවටුන"},
-{name:"Sinigama", lat:6.1390, lon:80.1020, sinhala:"සීනිගම",specialNote:
-      "If you are entering from Katunayake direction Kurudugaha IC is the best option."},
+{name:"Sinigama", lat:6.1390, lon:80.1020, sinhala:"සීනිගම",extraExits:["e01-kurundugaha","e01-baddegama"]},
 {name:"Balapitiya", lat:6.2806, lon:80.0406, sinhala:"බලපිටිය"},
-{name:"Ahungalla", lat:6.3138, lon:80.0351, sinhala:"අහුන්ගල්ල",specialNote:
-      "If you are entering from Katunayake direction Welipenna IC is the nearest exit."},
-{name:"Kosgoda", lat:6.3386, lon:80.0289, sinhala:"කොස්ගොඩ",specialNote:
-      "If you are entering from Katunayake direction Welipenna IC is the nearest exit."},
+{name:"Ahungalla", lat:6.3138, lon:80.0351, sinhala:"අහුන්ගල්ල",extraExits:["e01-welipenna","e01-kurundugaha"]},
+{name:"Kosgoda", lat:6.3386, lon:80.0289, sinhala:"කොස්ගොඩ",extraExits:["e01-welipenna","e01-kurundugaha"]},
 {name:"Induruwa", lat:6.3739, lon:80.0106, sinhala:"ඉඳුරුව"},
-{name:"Beruwala", lat:6.4667, lon:79.9833, sinhala:"බේරුවල",specialNote:
-      "If you are entering from Mattala direction Welipenna IC is the nearest exit."},
+{name:"Beruwala", lat:6.4667, lon:79.9833, sinhala:"බේරුවල",extraExits:["e01-welipenna","e01-dodangoda"]},
 {name:"Katukurunda", lat:6.5687, lon:79.9892, sinhala:"කටුකුරුන්ද"},
-{name:"Waskaduwa", lat:6.6110, lon:79.9520, sinhala:"වස්කඩුව",specialNote:
-      "If you are entering from Katunayake direction Gelanigama IC is the nearest exit."},
+{name:"Waskaduwa", lat:6.6110, lon:79.9520, sinhala:"වස්කඩුව",extraExits:["e01-gelanigama","e01-dodangoda"]},
 //{name:"Bulathsinhala", lat:6.6499, lon:80.1780},
 {name:"Padukka", lat:6.8415, lon:80.0916, sinhala:"පාදුක්ක"}
 
