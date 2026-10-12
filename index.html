@@ -3003,28 +3003,37 @@ function calculateToll() {
     vehicleCategories[category];
 
   if (rate === null) {
+if (rate === null) {
 
-    modalContent.innerHTML = `
-      <span class="badge">TOLL RESULT</span>
+const currentLang =
+document.documentElement.lang === "si" ? "si" : "en";
 
-      <h2>
-        ${escapeHtml(entrance.name)}
-        →
-        ${escapeHtml(exit.name)}
-      </h2>
+const errorMessage = currentLang === "si"
+? "මෙම අන්තර් හුවමාරු මධ්‍යස්ථාන අතර සෘජුවම ඇතුළු වීමට හෝ පිටවීමට නොහැකිය."
+: "You cannot directly enter or exit between these interchanges.";
 
-      <div class="small">
-        Vehicle: ${escapeHtml(categoryData.name)}
-      </div>
+modalContent.innerHTML = `
+<span class="badge">TOLL RESULT</span>
 
-      <div class="error" id="interchangeError">
-  You cannot directly enter or exit between these interchanges.
+<h2>
+  ${escapeHtml(entrance.name)}
+  →
+  ${escapeHtml(exit.name)}
+</h2>
+
+<div class="small">
+  Vehicle: ${escapeHtml(categoryData.name)}
 </div>
-    `;
 
-    modal.classList.add("show");
-    return;
-  }
+<div class="error" id="interchangeError">
+  ${errorMessage}
+</div>
+
+`;
+
+modal.classList.add("show");
+return;
+}
 
   modalContent.innerHTML = `
     <span class="badge">TOLL RESULT</span>
