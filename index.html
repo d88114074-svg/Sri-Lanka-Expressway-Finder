@@ -3003,37 +3003,28 @@ function calculateToll() {
     vehicleCategories[category];
 
   if (rate === null) {
-if (rate === null) {
 
-const currentLang =
-document.documentElement.lang === "si" ? "si" : "en";
+    modalContent.innerHTML = `
+      <span class="badge">TOLL RESULT</span>
 
-const errorMessage = currentLang === "si"
-? "මෙම අන්තර් හුවමාරු මධ්‍යස්ථාන අතර සෘජුවම ඇතුළු වීමට හෝ පිටවීමට නොහැකිය."
-: "You cannot directly enter or exit between these interchanges.";
+      <h2>
+        ${escapeHtml(entrance.name)}
+        →
+        ${escapeHtml(exit.name)}
+      </h2>
 
-modalContent.innerHTML = `
-<span class="badge">TOLL RESULT</span>
+      <div class="small">
+        Vehicle: ${escapeHtml(categoryData.name)}
+      </div>
 
-<h2>
-  ${escapeHtml(entrance.name)}
-  →
-  ${escapeHtml(exit.name)}
-</h2>
+      <div class="error">
+       You Cannot directly enter or exit between these interchanges 
+      </div>
+    `;
 
-<div class="small">
-  Vehicle: ${escapeHtml(categoryData.name)}
-</div>
-
-<div class="error" id="interchangeError">
-  ${errorMessage}
-</div>
-
-`;
-
-modal.classList.add("show");
-return;
-}
+    modal.classList.add("show");
+    return;
+  }
 
   modalContent.innerHTML = `
     <span class="badge">TOLL RESULT</span>
@@ -3072,11 +3063,11 @@ return;
 
     </div>
 
-    <div class="notice" id="tollNotice">
-  Please verify this toll amount against the latest
-  official Sri Lankan expressway toll information
-  before relying on it for payment.
-</div>
+    <div class="notice">
+      Please verify this toll amount against the latest
+      official Sri Lankan expressway toll information
+      before relying on it for payment.
+    </div>
   `;
 
   modal.classList.add("show");
@@ -3345,25 +3336,7 @@ document.getElementById("noticeBar1").textContent =
 
 document.getElementById("noticeBar2").textContent =
   noticeTexts[lang].line2;
-	
-const tollNotice = document.getElementById("tollNotice");
 
-if (tollNotice) {
-  tollNotice.textContent =
-    lang === "si"
-      ? "ගෙවීම් කිරීමට පෙර, මෙම ගාස්තු මුදල ශ්‍රී ලංකාවේ නවතම නිල අධිවේගී මාර්ග ගාස්තු තොරතුරු සමඟ සසඳා තහවුරු කරගන්න."
-      : "Please verify this toll amount against the latest official Sri Lankan expressway toll information before relying on it for payment.";
-}
-
-	const interchangeError =
-  document.getElementById("interchangeError");
-
-if (interchangeError) {
-  interchangeError.textContent =
-    lang === "si"
-      ? "මෙම අන්තර් හුවමාරු මධ්‍යස්ථාන අතර සෘජුවම ඇතුළු වීමට හෝ පිටවීමට නොහැකිය."
-      : "You cannot directly enter or exit between these interchanges.";
-}
 	showVehicleCategoryNotice();
 
 }
